@@ -1,5 +1,8 @@
 package carlosdelachica;
 
+import carlosdelachica.model.Post;
+import carlosdelachica.model.PostRepository;
+import carlosdelachica.model.User;
 import java.util.Arrays;
 
 public class PostCommand implements Command {

@@ -1,4 +1,4 @@
-package carlosdelachica;
+package carlosdelachica.model;
 
 public class User {
 

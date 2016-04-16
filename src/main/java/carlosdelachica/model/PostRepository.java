@@ -1,4 +1,4 @@
-package carlosdelachica;
+package carlosdelachica.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,7 @@
 package carlosdelachica;
 
+import carlosdelachica.model.PostRepository;
+
 public class CommandsFactory {
 
   private final Clock clock;

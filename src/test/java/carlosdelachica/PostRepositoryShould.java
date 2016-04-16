@@ -1,5 +1,8 @@
 package carlosdelachica;
 
+import carlosdelachica.model.Post;
+import carlosdelachica.model.PostRepository;
+import carlosdelachica.model.User;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;

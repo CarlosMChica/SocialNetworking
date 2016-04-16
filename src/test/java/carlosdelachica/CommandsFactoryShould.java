@@ -1,5 +1,6 @@
 package carlosdelachica;
 
+import carlosdelachica.model.PostRepository;
 import org.junit.Before;
 import org.junit.Test;
 
