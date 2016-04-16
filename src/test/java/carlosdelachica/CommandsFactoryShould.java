@@ -13,10 +13,12 @@ public class CommandsFactoryShould {
 
   private CommandsFactory commandsFactory;
   private PostRepository repository;
+  private Clock clock;
 
   @Before public void setUp() {
+    clock = new Clock();
     repository = new PostRepository();
-    commandsFactory = new CommandsFactory(repository);
+    commandsFactory = new CommandsFactory(clock, repository);
   }
 
   @Test public void make_post_command_with_arguments_for_a_given_post_input() {
@@ -24,7 +26,7 @@ public class CommandsFactoryShould {
 
     Command command = commandsFactory.make(postInput);
 
-    Command expectedCommand = new PostCommand(repository, ANY_ARGUMENTS);
+    Command expectedCommand = new PostCommand(clock, repository, ANY_ARGUMENTS);
     assertThat(command, is(expectedCommand));
   }
 

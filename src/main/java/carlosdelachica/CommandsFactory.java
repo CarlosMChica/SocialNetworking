@@ -2,13 +2,15 @@ package carlosdelachica;
 
 public class CommandsFactory {
 
-  private PostRepository repository;
+  private final Clock clock;
+  private final PostRepository repository;
 
-  public CommandsFactory(PostRepository repository) {
+  public CommandsFactory(Clock clock, PostRepository repository) {
+    this.clock = clock;
     this.repository = repository;
   }
 
   public Command make(Input input) {
-    return new PostCommand(repository, input.getArguments());
+    return new PostCommand(clock, repository, input.getArguments());
   }
 }

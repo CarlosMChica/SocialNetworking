@@ -3,12 +3,16 @@ package carlosdelachica;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.*;
 
-public class PostingFeature {
+@RunWith(MockitoJUnitRunner.class) public class PostingFeature {
 
   private static final String ANY_USER_NAME = "Bob";
   private static final User BOB = new User(ANY_USER_NAME);
@@ -20,12 +24,15 @@ public class PostingFeature {
   private static final Post SECOND_POST = new Post(BOB, SECOND_POST_MESSAGE, SECOND_POST_TIMESTAMP);
   private static final List<Post> POSTS = asList(FIRST_POST, SECOND_POST);
 
+  @Mock Clock clock;
+
   private PostRepository repository;
   private CommandsFactory commandsFactory;
 
   @Before public void setUp() {
+    when(clock.currentTimeInMillis()).thenReturn(FIRST_POST_TIMESTAMP, SECOND_POST_TIMESTAMP);
     repository = new PostRepository();
-    commandsFactory = new CommandsFactory(repository);
+    commandsFactory = new CommandsFactory(clock, repository);
   }
 
   @Test public void user_can_publish_messages_to_timeline() {

@@ -4,16 +4,21 @@ import java.util.Arrays;
 
 public class PostCommand implements Command {
 
+  private final Clock clock;
   private final PostRepository repository;
   private final String[] arguments;
 
-  public PostCommand(PostRepository repository, String[] arguments) {
+  public PostCommand(Clock clock, PostRepository repository, String[] arguments) {
+    this.clock = clock;
     this.repository = repository;
     this.arguments = arguments;
   }
 
   public void execute() {
-
+    User user = new User(arguments[0]);
+    String message = arguments[1];
+    Post post = new Post(user, message, clock.currentTimeInMillis());
+    repository.store(post);
   }
 
   @Override public String toString() {
