@@ -1,7 +1,10 @@
 package carlosdelachica.infrastructure;
 
+import java.util.Date;
+
 public class Clock {
+
   public long currentTimeInMillis() {
-    throw new UnsupportedOperationException();
+    return new Date().getTime();
   }
 }
