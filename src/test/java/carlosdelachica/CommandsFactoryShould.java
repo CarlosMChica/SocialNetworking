@@ -1,5 +1,8 @@
 package carlosdelachica;
 
+import carlosdelachica.command.Command;
+import carlosdelachica.command.CommandsFactory;
+import carlosdelachica.command.PostCommand;
 import carlosdelachica.model.PostRepository;
 import org.junit.Before;
 import org.junit.Test;

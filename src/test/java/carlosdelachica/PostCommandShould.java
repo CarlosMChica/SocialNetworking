@@ -1,5 +1,6 @@
 package carlosdelachica;
 
+import carlosdelachica.command.PostCommand;
 import carlosdelachica.model.Post;
 import carlosdelachica.model.PostRepository;
 import carlosdelachica.model.User;
