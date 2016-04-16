@@ -1,7 +1,10 @@
 package carlosdelachica;
 
+import static carlosdelachica.Input.POST;
+
 public class InputParser {
   public Input parse(String input) {
-    return null;
+    String[] parts = input.split(" -> ");
+    return POST.withArguments(parts);
   }
 }
