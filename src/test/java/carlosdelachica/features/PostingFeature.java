@@ -1,5 +1,8 @@
-package carlosdelachica;
+package carlosdelachica.features;
 
+import carlosdelachica.Clock;
+import carlosdelachica.Input;
+import carlosdelachica.InputParser;
 import carlosdelachica.command.Command;
 import carlosdelachica.command.CommandsFactory;
 import carlosdelachica.model.Post;

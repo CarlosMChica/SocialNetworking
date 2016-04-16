@@ -1,4 +1,4 @@
-package carlosdelachica;
+package carlosdelachica.model;
 
 import carlosdelachica.model.Post;
 import carlosdelachica.model.PostRepository;
