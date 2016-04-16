@@ -21,18 +21,19 @@ public class PostingFeature {
   private static final List<Post> POSTS = asList(FIRST_POST, SECOND_POST);
 
   private PostRepository repository;
-  private Invoker invoker;
+  private CommandsFactory commandsFactory;
 
   @Before public void setUp() {
     repository = new PostRepository();
-    invoker = new Invoker(new Command[] {new PostCommand(repository)});
+    commandsFactory = new CommandsFactory(repository);
   }
 
   @Test public void user_can_publish_messages_to_timeline() {
     Input[] inputs = givenInputs();
 
     for (Input input : inputs) {
-      invoker.execute(input);
+      Command command = commandsFactory.make(input);
+      command.execute();
     }
 
     assertThat(repository.postsOf(BOB), is(POSTS));
