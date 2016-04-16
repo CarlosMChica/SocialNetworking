@@ -10,4 +10,7 @@ public enum Input {
     return this;
   }
 
+  public String[] getArguments() {
+    return arguments;
+  }
 }
