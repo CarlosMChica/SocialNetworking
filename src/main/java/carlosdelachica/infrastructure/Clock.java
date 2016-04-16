@@ -1,4 +1,4 @@
-package carlosdelachica;
+package carlosdelachica.infrastructure;
 
 public class Clock {
   public long currentTimeInMillis() {

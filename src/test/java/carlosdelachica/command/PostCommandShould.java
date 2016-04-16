@@ -1,7 +1,6 @@
 package carlosdelachica.command;
 
-import carlosdelachica.Clock;
-import carlosdelachica.command.PostCommand;
+import carlosdelachica.infrastructure.Clock;
 import carlosdelachica.model.Post;
 import carlosdelachica.model.PostRepository;
 import carlosdelachica.model.User;

@@ -1,6 +1,6 @@
 package carlosdelachica.command;
 
-import carlosdelachica.Clock;
+import carlosdelachica.infrastructure.Clock;
 import carlosdelachica.console.Input;
 import carlosdelachica.model.PostRepository;
 import org.junit.Before;
