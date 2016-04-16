@@ -3,11 +3,15 @@ package carlosdelachica;
 import org.junit.Before;
 import org.junit.Test;
 
-import static carlosdelachica.Input.POST;
+import static carlosdelachica.Input.Type.POST;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class InputParserShould {
+
+  private static final String FIRST_ARGUMENT = "arg1";
+  private static final String SECOND_ARGUMENT = "arg2";
+  private static final String[] ARGUMENTS = new String[] {FIRST_ARGUMENT, SECOND_ARGUMENT};
 
   private InputParser parser;
 
@@ -20,10 +24,11 @@ public class InputParserShould {
 
     Input parsedInput = parser.parse(input);
 
-    assertThat(parsedInput, is(POST.withArguments("User", "User Message")));
+    Input expectedInput = new Input(POST, ARGUMENTS);
+    assertThat(parsedInput, is(expectedInput));
   }
 
   private String givenInputWithPostAction() {
-    return "User -> User Message";
+    return FIRST_ARGUMENT + " -> " + SECOND_ARGUMENT;
   }
 }
