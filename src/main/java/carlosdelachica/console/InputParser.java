@@ -1,6 +1,6 @@
-package carlosdelachica;
+package carlosdelachica.console;
 
-import static carlosdelachica.Input.Type.POST;
+import static carlosdelachica.console.Input.Type.POST;
 
 public class InputParser {
   public Input parse(String input) {

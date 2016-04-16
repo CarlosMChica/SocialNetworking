@@ -1,4 +1,4 @@
-package carlosdelachica;
+package carlosdelachica.console;
 
 import java.util.Arrays;
 
