@@ -3,7 +3,7 @@ package carlosdelachica;
 import carlosdelachica.command.Command;
 import carlosdelachica.command.CommandsFactory;
 import carlosdelachica.console.ConsoleWrapper;
-import carlosdelachica.console.Input;
+import carlosdelachica.model.Input;
 import carlosdelachica.console.InputParser;
 import carlosdelachica.console.View;
 import carlosdelachica.infrastructure.Clock;

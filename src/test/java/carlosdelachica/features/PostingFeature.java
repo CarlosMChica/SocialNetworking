@@ -1,7 +1,7 @@
 package carlosdelachica.features;
 
 import carlosdelachica.infrastructure.Clock;
-import carlosdelachica.console.Input;
+import carlosdelachica.model.Input;
 import carlosdelachica.console.InputParser;
 import carlosdelachica.command.Command;
 import carlosdelachica.command.CommandsFactory;

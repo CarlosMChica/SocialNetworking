@@ -1,12 +1,12 @@
 package carlosdelachica.command;
 
 import carlosdelachica.infrastructure.Clock;
-import carlosdelachica.console.Input;
+import carlosdelachica.model.Input;
 import carlosdelachica.model.PostRepository;
 import org.junit.Before;
 import org.junit.Test;
 
-import static carlosdelachica.console.Input.Type.POST;
+import static carlosdelachica.model.Input.Type.POST;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 

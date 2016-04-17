@@ -1,7 +1,7 @@
 package carlosdelachica.command;
 
 import carlosdelachica.infrastructure.Clock;
-import carlosdelachica.console.Input;
+import carlosdelachica.model.Input;
 import carlosdelachica.model.PostRepository;
 
 public class CommandsFactory {
