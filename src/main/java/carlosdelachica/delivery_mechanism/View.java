@@ -1,4 +1,4 @@
-package carlosdelachica.console;
+package carlosdelachica.delivery_mechanism;
 
 public class View {
 

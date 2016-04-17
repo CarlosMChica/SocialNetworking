@@ -1,4 +1,4 @@
-package carlosdelachica.console;
+package carlosdelachica.delivery_mechanism;
 
 import org.junit.Before;
 import org.junit.Test;
