@@ -1,0 +1,43 @@
+package carlosdelachica.command;
+
+import carlosdelachica.model.PostRepository;
+import java.util.Arrays;
+
+public class FollowCommand implements Command {
+
+  private final PostRepository repository;
+  private final String[] arguments;
+
+  public FollowCommand(PostRepository repository, String[] arguments) {
+    this.repository = repository;
+    this.arguments = arguments;
+  }
+
+  @Override public void execute() {
+
+  }
+
+  @Override public String toString() {
+    return "FollowCommand{" +
+        "arguments=" + Arrays.toString(arguments) +
+        '}';
+  }
+
+  @Override public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    FollowCommand that = (FollowCommand) o;
+
+    // Probably incorrect - comparing Object[] arrays with Arrays.equals
+    return Arrays.equals(arguments, that.arguments);
+  }
+
+  @Override public int hashCode() {
+    return Arrays.hashCode(arguments);
+  }
+}

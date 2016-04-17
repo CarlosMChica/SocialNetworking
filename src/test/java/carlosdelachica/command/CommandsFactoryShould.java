@@ -10,8 +10,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static carlosdelachica.model.Input.Type.FOLLOW;
 import static carlosdelachica.model.Input.Type.POST;
 import static carlosdelachica.model.Input.Type.READ;
+import static carlosdelachica.model.Input.Type.WALL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -45,6 +47,32 @@ import static org.hamcrest.core.Is.is;
 
     Command expectedCommand = new ReadCommand(view, repository, ANY_ARGUMENTS);
     assertThat(command, is(expectedCommand));
+  }
+
+  @Test public void make_follow_command_with_arguments_for_a_given_follow_input() {
+    Input readInput = givenFollowInputWith(ANY_ARGUMENTS);
+
+    Command command = commandsFactory.make(readInput);
+
+    Command expectedCommand = new FollowCommand(repository, ANY_ARGUMENTS);
+    assertThat(command, is(expectedCommand));
+  }
+
+  @Test public void make_wall_command_with_arguments_for_a_given_wall_input() {
+    Input readInput = givenWallInputWith(ANY_ARGUMENTS);
+
+    Command command = commandsFactory.make(readInput);
+
+    Command expectedCommand = new WallCommand(repository, ANY_ARGUMENTS);
+    assertThat(command, is(expectedCommand));
+  }
+
+  private Input givenWallInputWith(String[] arguments) {
+    return new Input(WALL, arguments);
+  }
+
+  private Input givenFollowInputWith(String[] arguments) {
+    return new Input(FOLLOW, arguments);
   }
 
   private Input givenPostInputWith(String[] arguments) {

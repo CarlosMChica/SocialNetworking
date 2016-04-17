@@ -18,11 +18,16 @@ public class CommandsFactory {
   }
 
   public Command make(Input input) {
+    String[] arguments = input.getArguments();
     switch (input.getType()) {
       case POST:
-        return new PostCommand(clock, repository, input.getArguments());
+        return new PostCommand(clock, repository, arguments);
       case READ:
-        return new ReadCommand(view, repository, input.getArguments());
+        return new ReadCommand(view, repository, arguments);
+      case FOLLOW:
+        return new FollowCommand(repository, arguments);
+      case WALL:
+        return new WallCommand(repository, arguments);
     }
     return null;
   }
