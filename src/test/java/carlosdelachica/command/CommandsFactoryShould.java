@@ -1,32 +1,31 @@
 package carlosdelachica.command;
 
-import carlosdelachica.delivery_mechanism.ConsoleWrapper;
-import carlosdelachica.delivery_mechanism.PostFormatter;
 import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
 import carlosdelachica.model.Input;
 import carlosdelachica.model.PostRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static carlosdelachica.model.Input.Type.POST;
 import static carlosdelachica.model.Input.Type.READ;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class CommandsFactoryShould {
+@RunWith(MockitoJUnitRunner.class) public class CommandsFactoryShould {
 
   private static final String[] ANY_ARGUMENTS = new String[] {"arg1"};
 
+  @Mock PostRepository repository;
+  @Mock Clock clock;
+  @Mock View view;
+
   private CommandsFactory commandsFactory;
-  private PostRepository repository;
-  private Clock clock;
-  private View view;
 
   @Before public void setUp() {
-    clock = new Clock();
-    repository = new PostRepository();
-    view = new View(new ConsoleWrapper(), new PostFormatter());
     commandsFactory = new CommandsFactory(clock, repository, view);
   }
 
