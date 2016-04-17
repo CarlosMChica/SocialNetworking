@@ -16,7 +16,7 @@ public class PostShould {
   private static final String ANY_MESSAGE = "";
 
   @Test public void return_is_from_user_for_user_post() {
-    Post post = new Post(USER, ANY_MESSAGE, ANY_TIMESTAMP);
+    Post post = givenUserPost();
 
     boolean userPost = post.isFrom(USER);
 
@@ -24,12 +24,14 @@ public class PostShould {
   }
 
   @Test public void return_is_not_from_user_for_other_user_post() {
-    Post post = new Post(USER, ANY_MESSAGE, ANY_TIMESTAMP);
+    Post post = givenUserPost();
 
     boolean userPost = post.isFrom(OTHER_USER);
 
     assertThat(userPost, is(false));
+  }
 
-
+  private Post givenUserPost() {
+    return new Post(USER, ANY_MESSAGE, ANY_TIMESTAMP);
   }
 }
