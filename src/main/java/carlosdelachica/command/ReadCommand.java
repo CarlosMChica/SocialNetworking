@@ -8,15 +8,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import static java.util.Collections.sort;
+import static java.util.stream.Collectors.toList;
 
 public class ReadCommand implements Command {
 
-  private static final Comparator<Post> TIMELINE_COMPARATOR = new Comparator<Post>() {
-    public int compare(Post o1, Post o2) {
-      return (int) (o2.getTimestamp() - o1.getTimestamp());
-    }
-  };
+  private static final Comparator<Post> TIMELINE_COMPARATOR =
+      (post1, post2) -> (int) (post2.getTimestamp() - post1.getTimestamp());
 
   private final View view;
   private final PostRepository repository;
@@ -35,9 +32,10 @@ public class ReadCommand implements Command {
   }
 
   private List<Post> generateTimelineFor(User user) {
-    List<Post> posts = repository.postsOf(user);
-    sort(posts, TIMELINE_COMPARATOR);
-    return posts;
+    return repository.postsOf(user).
+        stream().
+        sorted(TIMELINE_COMPARATOR).
+        collect(toList());
   }
 
   @Override public String toString() {
