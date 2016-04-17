@@ -10,7 +10,7 @@ import static carlosdelachica.model.Input.Type.WALL;
 public class InputParser {
 
   private static final String POST_ACTION = " -> ";
-  private static final String FOLLOW_ACTION = " follow ";
+  private static final String FOLLOW_ACTION = " follows ";
   private static final String WALL_ACTION = " wall ";
 
   public Input parse(String input) {

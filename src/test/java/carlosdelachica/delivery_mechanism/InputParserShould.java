@@ -18,7 +18,7 @@ public class InputParserShould {
   private static final String[] ARGUMENTS = new String[] {ARGUMENT_1, ARGUMENT_2};
 
   private static final String POST_ACTION = " -> ";
-  private static final String FOLLOW_ACTION = " follow ";
+  private static final String FOLLOW_ACTION = " follows ";
   private static final String WALL_ACTION = " wall ";
 
   private InputParser parser;
