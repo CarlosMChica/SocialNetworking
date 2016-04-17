@@ -3,18 +3,18 @@ package carlosdelachica;
 import carlosdelachica.command.Command;
 import carlosdelachica.command.CommandsFactory;
 import carlosdelachica.delivery_mechanism.ConsoleWrapper;
-import carlosdelachica.model.Input;
 import carlosdelachica.delivery_mechanism.InputParser;
 import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
+import carlosdelachica.model.Input;
 import carlosdelachica.model.PostRepository;
 
 public class Application {
 
   public static void main(String[] args) {
     InputParser parser = new InputParser();
-    CommandsFactory commandsFactory = new CommandsFactory(new Clock(), new PostRepository());
     View view = new View(new ConsoleWrapper());
+    CommandsFactory commandsFactory = new CommandsFactory(new Clock(), new PostRepository(), view);
 
     new SocialNetworkingApp(parser, commandsFactory, view).run();
   }
@@ -25,7 +25,7 @@ public class Application {
     private final CommandsFactory commandsFactory;
     private final View view;
 
-    SocialNetworkingApp(InputParser parser, CommandsFactory factory, View view) {
+    public SocialNetworkingApp(InputParser parser, CommandsFactory factory, View view) {
       this.parser = parser;
       this.commandsFactory = factory;
       this.view = view;

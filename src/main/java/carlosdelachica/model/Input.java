@@ -7,6 +7,10 @@ public class Input {
   private String[] arguments;
   private Type type;
 
+  public Input(Type type, String argument) {
+    this(type, new String[] {argument});
+  }
+
   public Input(Type type, String[] arguments) {
     this.arguments = arguments;
     this.type = type;
@@ -47,6 +51,6 @@ public class Input {
   }
 
   public enum Type {
-    POST
+    READ, POST
   }
 }

@@ -1,5 +1,6 @@
 package carlosdelachica.features;
 
+import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
 import carlosdelachica.model.Input;
 import carlosdelachica.delivery_mechanism.InputParser;
@@ -33,6 +34,7 @@ import static org.mockito.Mockito.*;
   private static final List<Post> POSTS = asList(FIRST_POST, SECOND_POST);
 
   @Mock Clock clock;
+  @Mock View view;
 
   private PostRepository repository;
   private CommandsFactory commandsFactory;
@@ -40,7 +42,7 @@ import static org.mockito.Mockito.*;
   @Before public void setUp() {
     when(clock.currentTimeInMillis()).thenReturn(FIRST_POST_TIMESTAMP, SECOND_POST_TIMESTAMP);
     repository = new PostRepository();
-    commandsFactory = new CommandsFactory(clock, repository);
+    commandsFactory = new CommandsFactory(clock, repository, view);
   }
 
   @Test public void user_can_publish_messages_to_timeline() {
