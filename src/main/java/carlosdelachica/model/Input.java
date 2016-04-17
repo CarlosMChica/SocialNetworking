@@ -55,6 +55,6 @@ public class Input {
   }
 
   public enum Type {
-    READ, POST
+    READ, FOLLOW, WALL, POST
   }
 }
