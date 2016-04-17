@@ -16,6 +16,7 @@ public class ConsoleWrapper {
   }
 
   public void printLines(List<String> lines) {
-    throw new UnsupportedOperationException();
+    lines.stream().
+        forEach(System.out::println);
   }
 }
