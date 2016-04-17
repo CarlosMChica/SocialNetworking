@@ -12,6 +12,10 @@ public class Post {
     this.timestamp = timestamp;
   }
 
+  public long getTimestamp() {
+    return timestamp;
+  }
+
   @Override public String toString() {
     return "Post{" +
         "user=" + user +
