@@ -7,10 +7,12 @@ public class View {
 
   private static final String PROMPT = "> ";
 
-  private ConsoleWrapper console;
+  private final ConsoleWrapper console;
+  private final PostFormatter postFormatter;
 
-  public View(ConsoleWrapper console) {
+  public View(ConsoleWrapper console, PostFormatter postFormatter) {
     this.console = console;
+    this.postFormatter = postFormatter;
   }
 
   public String getUserInput() {
@@ -19,6 +21,7 @@ public class View {
   }
 
   public void print(List<Post> posts) {
-    throw new UnsupportedOperationException();
+    List<String> lines = postFormatter.format(posts);
+    console.printLines(lines);
   }
 }

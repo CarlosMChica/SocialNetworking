@@ -1,5 +1,6 @@
 package carlosdelachica.delivery_mechanism;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleWrapper {
@@ -12,5 +13,9 @@ public class ConsoleWrapper {
 
   public void print(String line) {
     System.out.print(line);
+  }
+
+  public void printLines(List<String> lines) {
+    throw new UnsupportedOperationException();
   }
 }

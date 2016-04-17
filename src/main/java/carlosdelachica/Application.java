@@ -4,6 +4,7 @@ import carlosdelachica.command.Command;
 import carlosdelachica.command.CommandsFactory;
 import carlosdelachica.delivery_mechanism.ConsoleWrapper;
 import carlosdelachica.delivery_mechanism.InputParser;
+import carlosdelachica.delivery_mechanism.PostFormatter;
 import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
 import carlosdelachica.model.Input;
@@ -13,7 +14,7 @@ public class Application {
 
   public static void main(String[] args) {
     InputParser parser = new InputParser();
-    View view = new View(new ConsoleWrapper());
+    View view = new View(new ConsoleWrapper(), new PostFormatter());
     CommandsFactory commandsFactory = new CommandsFactory(new Clock(), new PostRepository(), view);
 
     new SocialNetworkingApp(parser, commandsFactory, view).run();

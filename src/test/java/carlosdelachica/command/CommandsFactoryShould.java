@@ -1,6 +1,7 @@
 package carlosdelachica.command;
 
 import carlosdelachica.delivery_mechanism.ConsoleWrapper;
+import carlosdelachica.delivery_mechanism.PostFormatter;
 import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
 import carlosdelachica.model.Input;
@@ -25,7 +26,7 @@ public class CommandsFactoryShould {
   @Before public void setUp() {
     clock = new Clock();
     repository = new PostRepository();
-    view = new View(new ConsoleWrapper());
+    view = new View(new ConsoleWrapper(), new PostFormatter());
     commandsFactory = new CommandsFactory(clock, repository, view);
   }
 
