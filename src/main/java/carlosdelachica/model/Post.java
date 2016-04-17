@@ -16,6 +16,10 @@ public class Post {
     return timestamp;
   }
 
+  public boolean isFrom(User user) {
+    return this.user.equals(user);
+  }
+
   @Override public String toString() {
     return "Post{" +
         "user=" + user +

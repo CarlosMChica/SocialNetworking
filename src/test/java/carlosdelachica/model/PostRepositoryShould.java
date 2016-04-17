@@ -1,40 +1,43 @@
 package carlosdelachica.model;
 
-import carlosdelachica.model.Post;
-import carlosdelachica.model.PostRepository;
-import carlosdelachica.model.User;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
 
-public class PostRepositoryShould {
+@RunWith(MockitoJUnitRunner.class) public class PostRepositoryShould {
 
-  private static final long TIMESTAMP = 0L;
   private static final String ANY_USER_NAME = "userName";
-  private static final String ANY_MESSAGE = "Message";
-  private static final User ANY_USER = new User(ANY_USER_NAME);
-  private static final int NUMBER_OF_POSTS = 1;
+  private static final User USER = new User(ANY_USER_NAME);
+
+  private static final boolean IS_USER_POST = true;
+  private static final boolean IS_NOT_USER_POST = false;
+
+  @Mock Post userPost;
+  @Mock Post otherUserPost;
 
   private PostRepository repository;
 
   @Before public void setUp() {
     repository = new PostRepository();
+
+    given(userPost.isFrom(USER)).willReturn(IS_USER_POST);
+    given(otherUserPost.isFrom(USER)).willReturn(IS_NOT_USER_POST);
   }
 
-  @Test public void store_posts() {
-    Post post = givenPostFor(ANY_USER);
+  @Test public void store_post_by_user() {
+    repository.store(userPost);
+    repository.store(otherUserPost);
 
-    repository.store(post);
+    List<Post> posts = repository.postsOf(USER);
 
-    List<Post> posts = repository.postsOf(ANY_USER);
-    assertThat(posts.size(), is(NUMBER_OF_POSTS));
-    assertThat(posts.get(0), is(post));
-  }
-
-  private Post givenPostFor(User user) {
-    return new Post(user, ANY_MESSAGE, TIMESTAMP);
+    assertThat(posts.size(), is(1));
+    assertThat(posts.get(0), is(userPost));
   }
 }

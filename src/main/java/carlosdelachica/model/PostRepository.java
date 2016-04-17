@@ -3,14 +3,17 @@ package carlosdelachica.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Collections.unmodifiableList;
+import static java.util.stream.Collectors.toList;
 
 public class PostRepository {
 
-  private List<Post> posts = new ArrayList<Post>();
+  private List<Post> posts = new ArrayList<>();
 
   public List<Post> postsOf(User user) {
-    return unmodifiableList(posts);
+    return posts.
+        stream().
+        filter(post -> post.isFrom(user)).
+        collect(toList());
   }
 
   public void store(Post post) {
