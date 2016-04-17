@@ -20,6 +20,10 @@ public class Input {
     return arguments;
   }
 
+  public Type getType() {
+    return type;
+  }
+
   @Override public String toString() {
     return "Input{" +
         "arguments=" + Arrays.toString(arguments) +

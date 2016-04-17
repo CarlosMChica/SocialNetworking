@@ -9,13 +9,21 @@ public class CommandsFactory {
 
   private final Clock clock;
   private final PostRepository repository;
+  private final View view;
 
   public CommandsFactory(Clock clock, PostRepository repository, View view) {
     this.clock = clock;
     this.repository = repository;
+    this.view = view;
   }
 
   public Command make(Input input) {
-    return new PostCommand(clock, repository, input.getArguments());
+    switch (input.getType()) {
+      case POST:
+        return new PostCommand(clock, repository, input.getArguments());
+      case READ:
+        return new ReadCommand(view, repository, input.getArguments());
+    }
+    return null;
   }
 }
