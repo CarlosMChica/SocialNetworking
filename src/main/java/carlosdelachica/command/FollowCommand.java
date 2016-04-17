@@ -1,20 +1,30 @@
 package carlosdelachica.command;
 
-import carlosdelachica.model.PostRepository;
+import carlosdelachica.model.User;
+import carlosdelachica.model.UserRepository;
 import java.util.Arrays;
 
 public class FollowCommand implements Command {
 
-  private final PostRepository repository;
+  private final UserRepository userRepository;
   private final String[] arguments;
 
-  public FollowCommand(PostRepository repository, String[] arguments) {
-    this.repository = repository;
+  public FollowCommand(UserRepository userRepository, String[] arguments) {
+    this.userRepository = userRepository;
     this.arguments = arguments;
   }
 
   @Override public void execute() {
+    User user = user();
+    user.follow(friend());
+  }
 
+  private User user() {
+    return userRepository.getByName(arguments[0]);
+  }
+
+  private User friend() {
+    return userRepository.getByName(arguments[1]);
   }
 
   @Override public String toString() {

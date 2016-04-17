@@ -8,6 +8,10 @@ public class User {
     this.name = name;
   }
 
+  public void follow(User friend) {
+    throw new UnsupportedOperationException();
+  }
+
   @Override public String toString() {
     return "User{" +
         "name='" + name + '\'' +

@@ -10,6 +10,7 @@ import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
 import carlosdelachica.model.Input;
 import carlosdelachica.model.PostRepository;
+import carlosdelachica.model.UserRepository;
 
 public class Application {
 
@@ -17,7 +18,8 @@ public class Application {
     InputParser parser = new InputParser();
     Clock clock = new Clock();
     View view = new View(new ConsoleWrapper(), new PostFormatter(new TimeAgoFormatter(clock)));
-    CommandsFactory commandsFactory = new CommandsFactory(clock, new PostRepository(), view);
+    CommandsFactory commandsFactory =
+        new CommandsFactory(clock, view, new PostRepository(), new UserRepository());
 
     new SocialNetworkingApp(parser, commandsFactory, view).run();
   }

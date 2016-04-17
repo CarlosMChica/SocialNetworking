@@ -1,14 +1,15 @@
 package carlosdelachica.features;
 
+import carlosdelachica.command.Command;
+import carlosdelachica.command.CommandsFactory;
+import carlosdelachica.delivery_mechanism.InputParser;
 import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
 import carlosdelachica.model.Input;
-import carlosdelachica.delivery_mechanism.InputParser;
-import carlosdelachica.command.Command;
-import carlosdelachica.command.CommandsFactory;
 import carlosdelachica.model.Post;
 import carlosdelachica.model.PostRepository;
 import carlosdelachica.model.User;
+import carlosdelachica.model.UserRepository;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +43,7 @@ import static org.mockito.Mockito.*;
   @Before public void setUp() {
     when(clock.currentTimeInMillis()).thenReturn(FIRST_POST_TIMESTAMP, SECOND_POST_TIMESTAMP);
     repository = new PostRepository();
-    commandsFactory = new CommandsFactory(clock, repository, view);
+    commandsFactory = new CommandsFactory(clock, view, repository, new UserRepository());
   }
 
   @Test public void user_can_publish_messages_to_timeline() {

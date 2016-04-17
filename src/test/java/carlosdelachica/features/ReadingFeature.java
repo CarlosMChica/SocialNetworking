@@ -12,6 +12,7 @@ import carlosdelachica.model.Input;
 import carlosdelachica.model.Post;
 import carlosdelachica.model.PostRepository;
 import carlosdelachica.model.User;
+import carlosdelachica.model.UserRepository;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +54,7 @@ import static org.mockito.Mockito.*;
   @Before public void setUp() {
     postRepository = new PostRepository();
     View view = new View(console, new PostFormatter(new TimeAgoFormatter(clock)));
-    commandsFactory = new CommandsFactory(clock, postRepository, view);
+    commandsFactory = new CommandsFactory(clock, view, postRepository, new UserRepository());
 
     given(clock.currentTimeInMillis()).willReturn(NOW);
     populatePostsRepository();

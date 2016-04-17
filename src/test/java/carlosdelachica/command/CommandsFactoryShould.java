@@ -4,6 +4,7 @@ import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
 import carlosdelachica.model.Input;
 import carlosdelachica.model.PostRepository;
+import carlosdelachica.model.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,14 +22,15 @@ import static org.hamcrest.core.Is.is;
 
   private static final String[] ANY_ARGUMENTS = new String[] {"arg1"};
 
-  @Mock PostRepository repository;
+  @Mock UserRepository userRepository;
+  @Mock PostRepository postRepository;
   @Mock Clock clock;
   @Mock View view;
 
   private CommandsFactory commandsFactory;
 
   @Before public void setUp() {
-    commandsFactory = new CommandsFactory(clock, repository, view);
+    commandsFactory = new CommandsFactory(clock, view, postRepository, userRepository);
   }
 
   @Test public void make_post_command_with_arguments_for_a_given_post_input() {
@@ -36,7 +38,7 @@ import static org.hamcrest.core.Is.is;
 
     Command command = commandsFactory.make(postInput);
 
-    Command expectedCommand = new PostCommand(clock, repository, ANY_ARGUMENTS);
+    Command expectedCommand = new PostCommand(clock, postRepository, ANY_ARGUMENTS);
     assertThat(command, is(expectedCommand));
   }
 
@@ -45,7 +47,7 @@ import static org.hamcrest.core.Is.is;
 
     Command command = commandsFactory.make(readInput);
 
-    Command expectedCommand = new ReadCommand(view, repository, ANY_ARGUMENTS);
+    Command expectedCommand = new ReadCommand(view, postRepository, ANY_ARGUMENTS);
     assertThat(command, is(expectedCommand));
   }
 
@@ -54,7 +56,7 @@ import static org.hamcrest.core.Is.is;
 
     Command command = commandsFactory.make(readInput);
 
-    Command expectedCommand = new FollowCommand(repository, ANY_ARGUMENTS);
+    Command expectedCommand = new FollowCommand(userRepository, ANY_ARGUMENTS);
     assertThat(command, is(expectedCommand));
   }
 
@@ -63,7 +65,7 @@ import static org.hamcrest.core.Is.is;
 
     Command command = commandsFactory.make(readInput);
 
-    Command expectedCommand = new WallCommand(repository, ANY_ARGUMENTS);
+    Command expectedCommand = new WallCommand(postRepository, ANY_ARGUMENTS);
     assertThat(command, is(expectedCommand));
   }
 
