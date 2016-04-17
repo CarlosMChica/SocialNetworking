@@ -4,6 +4,7 @@ import carlosdelachica.command.Command;
 import carlosdelachica.command.CommandsFactory;
 import carlosdelachica.delivery_mechanism.ConsoleWrapper;
 import carlosdelachica.delivery_mechanism.PostFormatter;
+import carlosdelachica.delivery_mechanism.TimeAgoFormatter;
 import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
 import carlosdelachica.model.Input;
@@ -50,9 +51,8 @@ import static org.mockito.Mockito.*;
 
   @Before public void setUp() {
     postRepository = new PostRepository();
-    View view = new View(console, new PostFormatter());
-    commandsFactory = new CommandsFactory(clock, postRepository,
-        view);
+    View view = new View(console, new PostFormatter(new TimeAgoFormatter(new Clock())));
+    commandsFactory = new CommandsFactory(clock, postRepository, view);
 
     populatePostsRepository();
   }

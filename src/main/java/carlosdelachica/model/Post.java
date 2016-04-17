@@ -20,6 +20,10 @@ public class Post {
     return this.user.equals(user);
   }
 
+  public String getMessage() {
+    return message;
+  }
+
   @Override public String toString() {
     return "Post{" +
         "user=" + user +
