@@ -19,7 +19,7 @@ public class InputParserShould {
 
   private static final String POST_ACTION = " -> ";
   private static final String FOLLOW_ACTION = " follows ";
-  private static final String WALL_ACTION = " wall ";
+  private static final String WALL_ACTION = " wall";
 
   private InputParser parser;
 
@@ -59,12 +59,12 @@ public class InputParserShould {
 
     Input parsedInput = parser.parse(input);
 
-    Input expectedInput = new Input(WALL, ARGUMENTS);
+    Input expectedInput = new Input(WALL, ARGUMENT_1);
     assertThat(parsedInput, is(expectedInput));
   }
 
   private String givenInputWithWallAction() {
-    return ARGUMENT_1 + WALL_ACTION + ARGUMENT_2;
+    return ARGUMENT_1 + WALL_ACTION;
   }
 
   private String givenInputWithFollowAction() {

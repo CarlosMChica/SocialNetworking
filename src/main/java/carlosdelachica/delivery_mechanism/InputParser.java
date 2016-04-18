@@ -11,7 +11,8 @@ public class InputParser {
 
   private static final String POST_ACTION = " -> ";
   private static final String FOLLOW_ACTION = " follows ";
-  private static final String WALL_ACTION = " wall ";
+  private static final String WALL_ACTION = " wall";
+  private static final String SPACE = " ";
 
   public Input parse(String input) {
     if (isPostType(input)) {
@@ -20,10 +21,13 @@ public class InputParser {
     if (isFollowType(input)) {
       return followInput(input);
     }
+    if (isReadType(input)) {
+      return readInput(input);
+    }
     if (isWallType(input)) {
       return wallInput(input);
     }
-    return readInput(input);
+    return null;
   }
 
   private Input readInput(String input) {
@@ -54,20 +58,24 @@ public class InputParser {
     return argumentsFor(WALL_ACTION, input);
   }
 
+  private boolean isReadType(String input) {
+    return !input.contains(SPACE);
+  }
+
   private boolean isWallType(String input) {
-    return isAction(WALL_ACTION, input);
+    return numberOfArguments(WALL_ACTION, input) == 1;
   }
 
   private boolean isFollowType(String input) {
-    return isAction(FOLLOW_ACTION, input);
+    return numberOfArguments(FOLLOW_ACTION, input) == 2;
   }
 
   private boolean isPostType(String input) {
-    return isAction(POST_ACTION, input);
+    return numberOfArguments(POST_ACTION, input) == 2;
   }
 
-  private boolean isAction(String action, String input) {
-    return argumentsFor(action, input).length == 2;
+  private int numberOfArguments(String action, String input) {
+    return argumentsFor(action, input).length;
   }
 
   private String[] argumentsFor(String action, String input) {
