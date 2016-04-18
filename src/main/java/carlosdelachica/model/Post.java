@@ -29,6 +29,10 @@ public class Post {
     return message;
   }
 
+  public String getUserName() {
+    return this.user.getUserName();
+  }
+
   @Override public String toString() {
     return "Post{" +
         "user=" + user +

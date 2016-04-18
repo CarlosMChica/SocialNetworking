@@ -23,6 +23,10 @@ public class User {
     friends.add(friend);
   }
 
+  public String getUserName() {
+    return name;
+  }
+
   public List<User> friends() {
     return unmodifiableList(friends);
   }
