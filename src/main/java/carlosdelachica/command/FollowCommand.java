@@ -15,16 +15,17 @@ public class FollowCommand implements Command {
   }
 
   @Override public void execute() {
-    User user = user();
-    user.follow(friend());
+    user().follow(friend());
   }
 
   private User user() {
-    return userRepository.getByName(arguments[0]);
+    String userName = arguments[0];
+    return userRepository.getByName(userName);
   }
 
   private User friend() {
-    return userRepository.getByName(arguments[1]);
+    String friendName = arguments[1];
+    return userRepository.getByName(friendName);
   }
 
   @Override public String toString() {
