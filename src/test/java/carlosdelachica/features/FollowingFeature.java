@@ -46,19 +46,19 @@ import static org.mockito.Mockito.*;
   private static final String BOB_POST_1_MESSAGE = "Damn! We lost!";
   private static final String BOB_POST_2_MESSAGE = "Good game though.";
   private static final String CHARLIE_POST_MESSAGE =
-      "I'm in New York today! Anyone want to have a coffee?";
+      "I'm in New York today! Anyone wants to have a coffee?";
 
-  private static final String BOB_POST_LINE =
+  private static final String CHARLIE_POST_LINE =
       "Charlie - I'm in New York today! Anyone wants to have a coffee? (15 seconds ago)";
   private static final String BOB_POST_1_LINE = "Bob - Good game though. (1 minute ago)";
   private static final String BOB_POST_2_LINE = "Bob - Damn! We lost! (2 minutes ago)";
   private static final String ALICE_POST_LINE = "Alice - I love the weather today (5 minutes ago)";
 
   private static final List<String> USER_WALL_LINES =
-      asList(BOB_POST_LINE, BOB_POST_1_LINE, BOB_POST_2_LINE, ALICE_POST_LINE);
+      asList(CHARLIE_POST_LINE, BOB_POST_1_LINE, BOB_POST_2_LINE, ALICE_POST_LINE);
 
   @Mock Clock timeAgoFormatterClock;
-  @Mock Clock postCommandClock;
+  @Mock Clock commandsClock;
   @Mock ConsoleWrapper console;
 
   private CommandsFactory commandsFactory;
@@ -68,11 +68,11 @@ import static org.mockito.Mockito.*;
     inputParser = new InputParser();
     View view = new View(console, new PostFormatter(new TimeAgoFormatter(timeAgoFormatterClock)));
     commandsFactory =
-        new CommandsFactory(postCommandClock, view, new PostRepository(), new UserRepository());
+        new CommandsFactory(commandsClock, view, new PostRepository(), new UserRepository());
 
     given(timeAgoFormatterClock.currentTimeInMillis()).willReturn(NOW);
-    given(postCommandClock.currentTimeInMillis()).willReturn(FIVE_MINS_AGO, TWO_MINS_AGO,
-        ONE_MIN_AGO, FIFTEEN_SECS_AGO);
+    given(commandsClock.currentTimeInMillis()).willReturn(FIVE_MINS_AGO, TWO_MINS_AGO, ONE_MIN_AGO,
+        FIFTEEN_SECS_AGO);
   }
 
   @Test public void user_can_subscribe_to_other_user_timeline() {
