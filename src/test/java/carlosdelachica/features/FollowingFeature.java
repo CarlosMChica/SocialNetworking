@@ -77,6 +77,7 @@ import static org.mockito.Mockito.*;
 
   @Test public void user_can_subscribe_to_other_user_timeline() {
     executePostCommands(givenPostInputs());
+
     executeFollowCommands(givenFollowInputs());
     executeWallCommand(givenWallInput());
 
@@ -95,8 +96,8 @@ import static org.mockito.Mockito.*;
     executeInputs(wallInput);
   }
 
-  private void executeInputs(Input... postInputs) {
-    Stream.of(postInputs).forEach(input -> {
+  private void executeInputs(Input... inputs) {
+    Stream.of(inputs).forEach(input -> {
       Command command = commandsFactory.make(input);
       command.execute();
     });

@@ -11,6 +11,7 @@ import carlosdelachica.model.PostRepository;
 import carlosdelachica.model.User;
 import carlosdelachica.model.UserRepository;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,15 +25,20 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class) public class PostingFeature {
 
+  private static final String POST_ACTION = " -> ";
+
   private static final String ANY_USER_NAME = "Bob";
   private static final User BOB = new User(ANY_USER_NAME);
-  private static final long FIRST_POST_TIMESTAMP = 1L;
-  private static final long SECOND_POST_TIMESTAMP = 2L;
-  private static final String FIRST_POST_MESSAGE = "Damn! We lost!";
-  private static final String SECOND_POST_MESSAGE = "Good game though.";
-  private static final Post FIRST_POST = new Post(BOB, FIRST_POST_MESSAGE, FIRST_POST_TIMESTAMP);
-  private static final Post SECOND_POST = new Post(BOB, SECOND_POST_MESSAGE, SECOND_POST_TIMESTAMP);
-  private static final List<Post> POSTS = asList(FIRST_POST, SECOND_POST);
+
+  private static final long POST_1_TIMESTAMP = 1L;
+  private static final long POST_2_TIMESTAMP = 2L;
+
+  private static final String POST_1_MESSAGE = "Damn! We lost!";
+  private static final String POST_2_MESSAGE = "Good game though.";
+
+  private static final Post BOB_POST_1 = new Post(BOB, POST_1_MESSAGE, POST_1_TIMESTAMP);
+  private static final Post BOB_POST_2 = new Post(BOB, POST_2_MESSAGE, POST_2_TIMESTAMP);
+  private static final List<Post> BOB_POSTS = asList(BOB_POST_1, BOB_POST_2);
 
   @Mock Clock clock;
   @Mock View view;
@@ -41,7 +47,7 @@ import static org.mockito.Mockito.*;
   private CommandsFactory commandsFactory;
 
   @Before public void setUp() {
-    when(clock.currentTimeInMillis()).thenReturn(FIRST_POST_TIMESTAMP, SECOND_POST_TIMESTAMP);
+    when(clock.currentTimeInMillis()).thenReturn(POST_1_TIMESTAMP, POST_2_TIMESTAMP);
     repository = new PostRepository();
     commandsFactory = new CommandsFactory(clock, view, repository, new UserRepository());
   }
@@ -49,18 +55,18 @@ import static org.mockito.Mockito.*;
   @Test public void user_can_publish_messages_to_timeline() {
     Input[] inputs = givenInputs();
 
-    for (Input input : inputs) {
+    Stream.of(inputs).forEach(input -> {
       Command command = commandsFactory.make(input);
       command.execute();
-    }
+    });
 
-    assertThat(repository.postsOf(BOB), is(POSTS));
+    assertThat(repository.postsOf(BOB), is(BOB_POSTS));
   }
 
   private Input[] givenInputs() {
     InputParser inputParser = new InputParser();
-    Input firstInput = inputParser.parse(ANY_USER_NAME + " -> " + FIRST_POST_MESSAGE);
-    Input secondInput = inputParser.parse(ANY_USER_NAME + " -> " + SECOND_POST_MESSAGE);
+    Input firstInput = inputParser.parse(ANY_USER_NAME + POST_ACTION + POST_1_MESSAGE);
+    Input secondInput = inputParser.parse(ANY_USER_NAME + POST_ACTION + POST_2_MESSAGE);
     return new Input[] {firstInput, secondInput};
   }
 }
