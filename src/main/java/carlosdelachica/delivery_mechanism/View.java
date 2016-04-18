@@ -8,11 +8,11 @@ public class View {
   private static final String PROMPT = "> ";
 
   private final ConsoleWrapper console;
-  private final PostFormatter postFormatter;
+  private final PostFormatter formatter;
 
-  public View(ConsoleWrapper console, PostFormatter postFormatter) {
+  public View(ConsoleWrapper console, PostFormatter formatter) {
     this.console = console;
-    this.postFormatter = postFormatter;
+    this.formatter = formatter;
   }
 
   public String getUserInput() {
@@ -21,6 +21,10 @@ public class View {
   }
 
   public void printTimeline(List<Post> posts) {
-    console.printLines(postFormatter.formatTimeline(posts));
+    console.printLines(formatter.formatTimeline(posts));
+  }
+
+  public void printWall(List<Post> posts) {
+    console.printLines(formatter.formatWall(posts));
   }
 }

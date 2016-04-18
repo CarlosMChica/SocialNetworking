@@ -20,6 +20,10 @@ public class PostFormatter {
         collect(toList());
   }
 
+  public List<String> formatWall(List<Post> posts) {
+    throw new UnsupportedOperationException();
+  }
+
   private String formatTimeline(Post post) {
     return String.format("%s (%s)", post.getMessage(), formatTimeAgo(post));
   }

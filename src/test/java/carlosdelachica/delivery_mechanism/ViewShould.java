@@ -41,4 +41,13 @@ import static org.mockito.Mockito.*;
 
     verify(console).printLines(ANY_FORMATTED_POSTS);
   }
+
+  @Test public void print_formatted_wall_posts() {
+    given(formatter.formatWall(ANY_POSTS)).willReturn(ANY_FORMATTED_POSTS);
+
+    view.printWall(ANY_POSTS);
+
+    verify(console).printLines(ANY_FORMATTED_POSTS);
+  }
+
 }
