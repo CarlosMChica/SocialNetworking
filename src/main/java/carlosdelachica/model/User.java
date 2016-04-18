@@ -15,6 +15,10 @@ public class User {
     this.friends = new ArrayList<>();
   }
 
+  public boolean hasName(String name) {
+    return this.name.equals(name);
+  }
+
   public void follow(User friend) {
     friends.add(friend);
   }
@@ -26,6 +30,7 @@ public class User {
   @Override public String toString() {
     return "User{" +
         "name='" + name + '\'' +
+        ", friends=" + friends +
         '}';
   }
 
@@ -39,10 +44,15 @@ public class User {
 
     User user = (User) o;
 
-    return name != null ? name.equals(user.name) : user.name == null;
+    if (name != null ? !name.equals(user.name) : user.name != null) {
+      return false;
+    }
+    return friends != null ? friends.equals(user.friends) : user.friends == null;
   }
 
   @Override public int hashCode() {
-    return name != null ? name.hashCode() : 0;
+    int result = name != null ? name.hashCode() : 0;
+    result = 31 * result + (friends != null ? friends.hashCode() : 0);
+    return result;
   }
 }

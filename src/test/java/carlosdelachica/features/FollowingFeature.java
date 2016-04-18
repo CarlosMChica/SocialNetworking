@@ -76,12 +76,12 @@ import static org.mockito.Mockito.*;
 
   @Before public void setUp() {
     postRepository = new PostRepository();
+    inputParser = new InputParser();
     View view = new View(console, new PostFormatter(new TimeAgoFormatter(clock)));
     commandsFactory = new CommandsFactory(clock, view, postRepository, new UserRepository());
 
     given(clock.currentTimeInMillis()).willReturn(NOW);
     populatePostRepository();
-    inputParser = new InputParser();
   }
 
   @Test public void user_can_subscribe_to_other_user_timeline() {
