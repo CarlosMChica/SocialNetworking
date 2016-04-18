@@ -13,14 +13,14 @@ public class PostFormatter {
     this.timeAgoFormatter = timeAgoFormatter;
   }
 
-  public List<String> format(List<Post> posts) {
+  public List<String> formatTimeline(List<Post> posts) {
     return posts.
         stream().
-        map(this::format).
+        map(this::formatTimeline).
         collect(toList());
   }
 
-  private String format(Post post) {
+  private String formatTimeline(Post post) {
     return String.format("%s (%s)", post.getMessage(), formatTimeAgo(post));
   }
 

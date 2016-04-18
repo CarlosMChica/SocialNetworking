@@ -58,7 +58,7 @@ import static org.mockito.Mockito.*;
 
     command.execute();
 
-    verify(view).print(USER_WALL);
+    verify(view).printTimeline(USER_WALL);
   }
 
   private String[] givenArguments() {

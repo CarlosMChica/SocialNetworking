@@ -34,10 +34,10 @@ import static org.mockito.Mockito.*;
     verify(console).readLine();
   }
 
-  @Test public void print_formatted_posts() {
-    given(formatter.format(ANY_POSTS)).willReturn(ANY_FORMATTED_POSTS);
+  @Test public void print_formatted_timeline_posts() {
+    given(formatter.formatTimeline(ANY_POSTS)).willReturn(ANY_FORMATTED_POSTS);
 
-    view.print(ANY_POSTS);
+    view.printTimeline(ANY_POSTS);
 
     verify(console).printLines(ANY_FORMATTED_POSTS);
   }

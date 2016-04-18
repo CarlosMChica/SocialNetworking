@@ -46,7 +46,7 @@ import static org.mockito.Mockito.*;
 
     readCommand.execute();
 
-    verify(view).print(SORTED_USER_POSTS);
+    verify(view).printTimeline(SORTED_USER_POSTS);
   }
 
   private String[] givenArguments() {

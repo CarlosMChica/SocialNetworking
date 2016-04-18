@@ -20,8 +20,7 @@ public class View {
     return console.readLine();
   }
 
-  public void print(List<Post> posts) {
-    List<String> lines = postFormatter.format(posts);
-    console.printLines(lines);
+  public void printTimeline(List<Post> posts) {
+    console.printLines(postFormatter.formatTimeline(posts));
   }
 }

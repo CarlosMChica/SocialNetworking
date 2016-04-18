@@ -32,10 +32,10 @@ import static org.mockito.Matchers.any;
     given(timeAgoFormatter.format(any(Long.class))).willReturn("1 minute ago", "2 minutes ago");
   }
 
-  @Test public void format_posts() {
+  @Test public void format_timeline_posts() {
     List<Post> posts = givenPosts();
 
-    List<String> formattedPosts = formatter.format(posts);
+    List<String> formattedPosts = formatter.formatTimeline(posts);
 
     assertThat(formattedPosts.size(), is(2));
     assertThat(formattedPosts.get(0), is("Good game though. (1 minute ago)"));

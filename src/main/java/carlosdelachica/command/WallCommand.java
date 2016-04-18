@@ -36,7 +36,7 @@ public class WallCommand implements Command {
   }
 
   private void printWall(User user) {
-    view.print(generateUserWall(user));
+    view.printTimeline(generateUserWall(user));
   }
 
   private List<Post> generateUserWall(User user) {

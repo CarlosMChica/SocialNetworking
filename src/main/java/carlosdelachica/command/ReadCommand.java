@@ -32,7 +32,7 @@ public class ReadCommand implements Command {
 
   private void printTimeline(User user) {
     List<Post> timeline = generateTimelineFor(user);
-    view.print(timeline);
+    view.printTimeline(timeline);
   }
 
   private List<Post> generateTimelineFor(User user) {
