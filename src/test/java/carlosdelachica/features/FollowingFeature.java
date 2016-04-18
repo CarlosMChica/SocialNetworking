@@ -9,11 +9,10 @@ import carlosdelachica.delivery_mechanism.TimeAgoFormatter;
 import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
 import carlosdelachica.model.Input;
-import carlosdelachica.model.Post;
 import carlosdelachica.model.PostRepository;
-import carlosdelachica.model.User;
 import carlosdelachica.model.UserRepository;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,86 +34,89 @@ import static org.mockito.Mockito.*;
   private static final long TWO_MINS_AGO = NOW - 2 * ONE_MIN;
   private static final long FIVE_MINS_AGO = NOW - 5 * ONE_MIN;
 
+  private static final String POST_ACTION = " -> ";
   private static final String FOLLOW_ACTION = " follows ";
   private static final String WALL_ACTION = " wall";
 
-  private static final String USER_NAME = "Charlie";
+  private static final String CHARLIE_USER_NAME = "Charlie";
   private static final String BOB_USER_NAME = "Bob";
   private static final String ALICE_USER_NAME = "Alice";
-  private static final User USER = new User(USER_NAME);
-  private static final User BOB_USER = new User(BOB_USER_NAME);
-  private static final User ALICE_USER = new User(ALICE_USER_NAME);
 
   private static final String ALICE_POST_MESSAGE = "I love the weather today";
-  private static final String BOB_POST_1_MESSAGE = "Good game though.";
-  private static final String BOB_POST_2_MESSAGE = "Damn! We lost!";
-  private static final String USER_POST_MESSAGE =
+  private static final String BOB_POST_1_MESSAGE = "Damn! We lost!";
+  private static final String BOB_POST_2_MESSAGE = "Good game though.";
+  private static final String CHARLIE_POST_MESSAGE =
       "I'm in New York today! Anyone want to have a coffee?";
 
-  private static final Post USER_POST = new Post(USER, USER_POST_MESSAGE, FIFTEEN_SECS_AGO);
-  private static final Post ALICE_POST = new Post(ALICE_USER, ALICE_POST_MESSAGE, FIVE_MINS_AGO);
-  private static final Post BOB_POST_1 = new Post(BOB_USER, BOB_POST_1_MESSAGE, TWO_MINS_AGO);
-  private static final Post BOB_POST_2 = new Post(BOB_USER, BOB_POST_2_MESSAGE, ONE_MIN_AGO);
-
-  private static final List<Post> ALL_POSTS = asList(USER_POST, ALICE_POST, BOB_POST_1, BOB_POST_2);
-
-  private static final String USER_POST_LINE =
+  private static final String BOB_POST_LINE =
       "Charlie - I'm in New York today! Anyone wants to have a coffee? (15 seconds ago)";
   private static final String BOB_POST_1_LINE = "Bob - Good game though. (1 minute ago)";
   private static final String BOB_POST_2_LINE = "Bob - Damn! We lost! (2 minutes ago)";
   private static final String ALICE_POST_LINE = "Alice - I love the weather today (5 minutes ago)";
 
   private static final List<String> USER_WALL_LINES =
-      asList(USER_POST_LINE, BOB_POST_1_LINE, BOB_POST_2_LINE, ALICE_POST_LINE);
+      asList(BOB_POST_LINE, BOB_POST_1_LINE, BOB_POST_2_LINE, ALICE_POST_LINE);
 
-  @Mock Clock clock;
+  @Mock Clock timeAgoFormatterClock;
+  @Mock Clock postCommandClock;
   @Mock ConsoleWrapper console;
 
   private CommandsFactory commandsFactory;
-  private PostRepository postRepository;
   private InputParser inputParser;
 
   @Before public void setUp() {
-    postRepository = new PostRepository();
     inputParser = new InputParser();
-    View view = new View(console, new PostFormatter(new TimeAgoFormatter(clock)));
-    commandsFactory = new CommandsFactory(clock, view, postRepository, new UserRepository());
+    View view = new View(console, new PostFormatter(new TimeAgoFormatter(timeAgoFormatterClock)));
+    commandsFactory =
+        new CommandsFactory(postCommandClock, view, new PostRepository(), new UserRepository());
 
-    given(clock.currentTimeInMillis()).willReturn(NOW);
-    populatePostRepository();
+    given(timeAgoFormatterClock.currentTimeInMillis()).willReturn(NOW);
+    given(postCommandClock.currentTimeInMillis()).willReturn(FIVE_MINS_AGO, TWO_MINS_AGO,
+        ONE_MIN_AGO, FIFTEEN_SECS_AGO);
   }
 
   @Test public void user_can_subscribe_to_other_user_timeline() {
-    executeFollowCommand(givenFollowInputs());
+    executePostCommands(givenPostInputs());
+    executeFollowCommands(givenFollowInputs());
     executeWallCommand(givenWallInput());
 
     verify(console).printLines(USER_WALL_LINES);
   }
 
-  private void executeFollowCommand(Input[] followInputs) {
-    for (Input followInput : followInputs) {
-      Command followCommand = commandsFactory.make(followInput);
-      followCommand.execute();
-    }
+  private void executePostCommands(Input[] postInputs) {
+    executeInputs(postInputs);
+  }
+
+  private void executeFollowCommands(Input[] followInputs) {
+    executeInputs(followInputs);
   }
 
   private void executeWallCommand(Input wallInput) {
-    Command wallCommand = commandsFactory.make(wallInput);
-    wallCommand.execute();
+    executeInputs(wallInput);
+  }
+
+  private void executeInputs(Input... postInputs) {
+    Stream.of(postInputs).forEach(input -> {
+      Command command = commandsFactory.make(input);
+      command.execute();
+    });
+  }
+
+  private Input[] givenPostInputs() {
+    Input postInput1 = inputParser.parse(ALICE_USER_NAME + POST_ACTION + ALICE_POST_MESSAGE);
+    Input postInput2 = inputParser.parse(BOB_USER_NAME + POST_ACTION + BOB_POST_1_MESSAGE);
+    Input postInput3 = inputParser.parse(BOB_USER_NAME + POST_ACTION + BOB_POST_2_MESSAGE);
+    Input postInput4 = inputParser.parse(CHARLIE_USER_NAME + POST_ACTION + CHARLIE_POST_MESSAGE);
+    return new Input[] {postInput1, postInput2, postInput3, postInput4};
   }
 
   private Input givenWallInput() {
-    return inputParser.parse(USER_NAME + WALL_ACTION);
+    return inputParser.parse(CHARLIE_USER_NAME + WALL_ACTION);
   }
 
   private Input[] givenFollowInputs() {
-    Input followInput1 = inputParser.parse(USER_NAME + FOLLOW_ACTION + BOB_USER_NAME);
-    Input followInput2 = inputParser.parse(USER_NAME + FOLLOW_ACTION + ALICE_USER_NAME);
+    Input followInput1 = inputParser.parse(CHARLIE_USER_NAME + FOLLOW_ACTION + BOB_USER_NAME);
+    Input followInput2 = inputParser.parse(CHARLIE_USER_NAME + FOLLOW_ACTION + ALICE_USER_NAME);
     return new Input[] {followInput1, followInput2};
-  }
-
-  private void populatePostRepository() {
-    ALL_POSTS.stream().
-        forEach(post -> postRepository.store(post));
   }
 }
