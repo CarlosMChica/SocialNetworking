@@ -1,6 +1,11 @@
 package carlosdelachica.model;
 
+import java.util.Comparator;
+
 public class Post {
+
+  public static final Comparator<Post> REVERSE_CHRONOLOGICAL =
+      (post1, post2) -> (int) (post2.getTimestamp() - post1.getTimestamp());
 
   private final User user;
   private final String message;

@@ -6,15 +6,11 @@ import carlosdelachica.model.PostRepository;
 import carlosdelachica.model.User;
 import carlosdelachica.model.UserRepository;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
 public class ReadCommand implements Command {
-
-  private static final Comparator<Post> REVERSE_CHRONOLOGICAL =
-      (post1, post2) -> (int) (post2.getTimestamp() - post1.getTimestamp());
 
   private final View view;
   private final PostRepository repository;
@@ -42,7 +38,7 @@ public class ReadCommand implements Command {
   private List<Post> generateTimelineFor(User user) {
     return repository.postsOf(user).
         stream().
-        sorted(REVERSE_CHRONOLOGICAL).
+        sorted(Post.REVERSE_CHRONOLOGICAL).
         collect(toList());
   }
 

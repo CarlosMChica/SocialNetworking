@@ -31,7 +31,7 @@ public class CommandsFactory {
       case FOLLOW:
         return new FollowCommand(userRepository, arguments);
       case WALL:
-        return new WallCommand(postRepository, arguments);
+        return new WallCommand(view, postRepository, userRepository, arguments);
     }
     return null;
   }

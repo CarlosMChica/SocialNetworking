@@ -65,7 +65,7 @@ import static org.hamcrest.core.Is.is;
 
     Command command = commandsFactory.make(readInput);
 
-    Command expectedCommand = new WallCommand(postRepository, ANY_ARGUMENTS);
+    Command expectedCommand = new WallCommand(view, postRepository, userRepository, ANY_ARGUMENTS);
     assertThat(command, is(expectedCommand));
   }
 

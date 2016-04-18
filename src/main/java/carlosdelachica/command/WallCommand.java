@@ -1,20 +1,60 @@
 package carlosdelachica.command;
 
+import carlosdelachica.delivery_mechanism.View;
+import carlosdelachica.model.Post;
 import carlosdelachica.model.PostRepository;
+import carlosdelachica.model.User;
+import carlosdelachica.model.UserRepository;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static carlosdelachica.model.Post.REVERSE_CHRONOLOGICAL;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Stream.concat;
+import static java.util.stream.Stream.of;
 
 public class WallCommand implements Command {
 
-  private final PostRepository repository;
+  private final View view;
+  private final PostRepository postRepository;
+  private final UserRepository userRepository;
   private final String[] arguments;
 
-  public WallCommand(PostRepository repository, String[] arguments) {
-    this.repository = repository;
+  public WallCommand(View view, PostRepository postRepository, UserRepository userRepository,
+      String[] arguments) {
+    this.view = view;
+    this.postRepository = postRepository;
+    this.userRepository = userRepository;
     this.arguments = arguments;
   }
 
   @Override public void execute() {
-    throw new UnsupportedOperationException();
+    String userName = arguments[0];
+    printWall(userRepository.getByName(userName));
+  }
+
+  private void printWall(User user) {
+    view.print(generateUserWall(user));
+  }
+
+  private List<Post> generateUserWall(User user) {
+    return userAndFriendsStream(user).map(postRepository::postsOf)
+        .reduce(this::allPosts)
+        .orElseGet(Collections::emptyList)
+        .stream()
+        .sorted(REVERSE_CHRONOLOGICAL)
+        .collect(toList());
+  }
+
+  private Stream<User> userAndFriendsStream(User user) {
+    return concat(of(user), user.friends().stream());
+  }
+
+  private List<Post> allPosts(List<Post> posts, List<Post> posts2) {
+    posts.addAll(posts2);
+    return posts;
   }
 
   @Override public String toString() {
