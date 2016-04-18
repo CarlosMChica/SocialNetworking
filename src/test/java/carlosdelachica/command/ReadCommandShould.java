@@ -40,7 +40,7 @@ import static org.mockito.Mockito.*;
     given(userRepository.getByName(ANY_USER_NAME)).willReturn(ANY_USER);
   }
 
-  @Test public void print_user_timeline() {
+  @Test public void print_user_timeline_in_reverse_chronological_order() {
     String[] arguments = givenArguments();
     ReadCommand readCommand = new ReadCommand(view, postRepository, userRepository, arguments);
 

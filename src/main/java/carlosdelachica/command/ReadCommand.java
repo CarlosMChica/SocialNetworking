@@ -13,7 +13,7 @@ import static java.util.stream.Collectors.toList;
 
 public class ReadCommand implements Command {
 
-  private static final Comparator<Post> TIMELINE_COMPARATOR =
+  private static final Comparator<Post> REVERSE_CHRONOLOGICAL =
       (post1, post2) -> (int) (post2.getTimestamp() - post1.getTimestamp());
 
   private final View view;
@@ -42,7 +42,7 @@ public class ReadCommand implements Command {
   private List<Post> generateTimelineFor(User user) {
     return repository.postsOf(user).
         stream().
-        sorted(TIMELINE_COMPARATOR).
+        sorted(REVERSE_CHRONOLOGICAL).
         collect(toList());
   }
 
