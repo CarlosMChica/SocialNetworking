@@ -14,7 +14,7 @@ public class WallCommand implements Command {
   }
 
   @Override public void execute() {
-
+    throw new UnsupportedOperationException();
   }
 
   @Override public String toString() {
