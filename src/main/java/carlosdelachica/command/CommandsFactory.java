@@ -10,13 +10,13 @@ public class CommandsFactory {
 
   private final Clock clock;
   private final View view;
-  private final PostRepository repository;
+  private final PostRepository postRepository;
   private final UserRepository userRepository;
 
   public CommandsFactory(Clock clock, View view, PostRepository postRepository,
       UserRepository userRepository) {
     this.clock = clock;
-    this.repository = postRepository;
+    this.postRepository = postRepository;
     this.view = view;
     this.userRepository = userRepository;
   }
@@ -25,13 +25,13 @@ public class CommandsFactory {
     String[] arguments = input.getArguments();
     switch (input.getType()) {
       case POST:
-        return new PostCommand(clock, repository, arguments);
+        return new PostCommand(clock, postRepository, userRepository, arguments);
       case READ:
-        return new ReadCommand(view, repository, arguments);
+        return new ReadCommand(view, postRepository, userRepository, arguments);
       case FOLLOW:
         return new FollowCommand(userRepository, arguments);
       case WALL:
-        return new WallCommand(repository, arguments);
+        return new WallCommand(postRepository, arguments);
     }
     return null;
   }

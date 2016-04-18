@@ -4,25 +4,32 @@ import carlosdelachica.infrastructure.Clock;
 import carlosdelachica.model.Post;
 import carlosdelachica.model.PostRepository;
 import carlosdelachica.model.User;
+import carlosdelachica.model.UserRepository;
 import java.util.Arrays;
 
 public class PostCommand implements Command {
 
   private final Clock clock;
   private final PostRepository repository;
+  private final UserRepository userRepository;
   private final String[] arguments;
 
-  public PostCommand(Clock clock, PostRepository repository, String[] arguments) {
+  public PostCommand(Clock clock, PostRepository repository, UserRepository userRepository,
+      String[] arguments) {
     this.clock = clock;
     this.repository = repository;
+    this.userRepository = userRepository;
     this.arguments = arguments;
   }
 
   public void execute() {
-    User user = new User(arguments[0]);
+    String userName = arguments[0];
     String message = arguments[1];
-    Post post = new Post(user, message, clock.currentTimeInMillis());
-    repository.store(post);
+    storePost(userRepository.getByName(userName), message);
+  }
+
+  private void storePost(User user, String message) {
+    repository.store(new Post(user, message, clock.currentTimeInMillis()));
   }
 
   @Override public String toString() {

@@ -4,6 +4,7 @@ import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.model.Post;
 import carlosdelachica.model.PostRepository;
 import carlosdelachica.model.User;
+import carlosdelachica.model.UserRepository;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,15 +32,17 @@ import static org.mockito.Mockito.*;
   private static final List<Post> SORTED_USER_POSTS = asList(SECOND_POST, FIRST_POST);
 
   @Mock View view;
-  @Mock PostRepository repository;
+  @Mock PostRepository postRepository;
+  @Mock UserRepository userRepository;
 
   @Before public void setUp() {
-    given(repository.postsOf(ANY_USER)).willReturn(USER_POSTS);
+    given(postRepository.postsOf(ANY_USER)).willReturn(USER_POSTS);
+    given(userRepository.getByName(ANY_USER_NAME)).willReturn(ANY_USER);
   }
 
   @Test public void print_user_timeline() {
     String[] arguments = givenArguments();
-    ReadCommand readCommand = new ReadCommand(view, repository, arguments);
+    ReadCommand readCommand = new ReadCommand(view, postRepository, userRepository, arguments);
 
     readCommand.execute();
 

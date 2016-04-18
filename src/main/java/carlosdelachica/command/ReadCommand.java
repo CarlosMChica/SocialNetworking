@@ -4,6 +4,7 @@ import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.model.Post;
 import carlosdelachica.model.PostRepository;
 import carlosdelachica.model.User;
+import carlosdelachica.model.UserRepository;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -17,16 +18,23 @@ public class ReadCommand implements Command {
 
   private final View view;
   private final PostRepository repository;
+  private final UserRepository userRepository;
   private final String[] arguments;
 
-  public ReadCommand(View view, PostRepository repository, String[] arguments) {
+  public ReadCommand(View view, PostRepository repository, UserRepository userRepository,
+      String[] arguments) {
     this.view = view;
     this.repository = repository;
+    this.userRepository = userRepository;
     this.arguments = arguments;
   }
 
   public void execute() {
-    User user = new User(arguments[0]);
+    String userName = arguments[0];
+    printTimeline(userRepository.getByName(userName));
+  }
+
+  private void printTimeline(User user) {
     List<Post> timeline = generateTimelineFor(user);
     view.print(timeline);
   }

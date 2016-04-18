@@ -38,7 +38,7 @@ import static org.hamcrest.core.Is.is;
 
     Command command = commandsFactory.make(postInput);
 
-    Command expectedCommand = new PostCommand(clock, postRepository, ANY_ARGUMENTS);
+    Command expectedCommand = new PostCommand(clock, postRepository, userRepository, ANY_ARGUMENTS);
     assertThat(command, is(expectedCommand));
   }
 
@@ -47,7 +47,7 @@ import static org.hamcrest.core.Is.is;
 
     Command command = commandsFactory.make(readInput);
 
-    Command expectedCommand = new ReadCommand(view, postRepository, ANY_ARGUMENTS);
+    Command expectedCommand = new ReadCommand(view, postRepository, userRepository, ANY_ARGUMENTS);
     assertThat(command, is(expectedCommand));
   }
 
