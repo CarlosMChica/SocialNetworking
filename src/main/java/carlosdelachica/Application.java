@@ -15,16 +15,11 @@ import carlosdelachica.model.user.UserRepository;
 public class Application {
 
   public static void main(String[] args) {
-    Clock clock = new Clock();
-    View view = new View(new ConsoleWrapper(), new PostFormatter(new TimeAgoFormatter(clock)));
-    CommandsFactory commandsFactory =
-        new CommandsFactory(clock, view, new PostRepository(), new UserRepository());
-
-    SocialNetworkingApp app = new SocialNetworkingApp(new InputParser(), commandsFactory, view);
-    execute(app);
+    SocialNetworkingApp app = SocialNetworkAppFactory.make();
+    run(app);
   }
 
-  private static void execute(SocialNetworkingApp app) {
+  private static void run(SocialNetworkingApp app) {
     while (true) {
       app.run();
     }
@@ -57,6 +52,22 @@ public class Application {
     private void executeCommandFor(Input input) {
       Command command = commandsFactory.make(input);
       command.execute();
+    }
+  }
+
+  private static class SocialNetworkAppFactory {
+
+    private static SocialNetworkingApp make() {
+      Clock clock = new Clock();
+      InputParser parser = new InputParser();
+      TimeAgoFormatter timeAgoFormatter = new TimeAgoFormatter(clock);
+      ConsoleWrapper console = new ConsoleWrapper();
+      PostRepository postRepo = new PostRepository();
+      UserRepository userRepo = new UserRepository();
+      PostFormatter postFormatter = new PostFormatter(timeAgoFormatter);
+      View view = new View(console, postFormatter);
+      CommandsFactory commandsFactory = new CommandsFactory(clock, view, postRepo, userRepo);
+      return new SocialNetworkingApp(parser, commandsFactory, view);
     }
   }
 }
