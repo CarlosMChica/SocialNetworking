@@ -7,14 +7,14 @@ import carlosdelachica.model.User;
 import carlosdelachica.model.UserRepository;
 import java.util.Arrays;
 
-public class PostCommand implements Command {
+class PostCommand implements Command {
 
   private final Clock clock;
   private final PostRepository postRepository;
   private final UserRepository userRepository;
   private final String[] arguments;
 
-  public PostCommand(Clock clock, PostRepository postRepository, UserRepository userRepository,
+  PostCommand(Clock clock, PostRepository postRepository, UserRepository userRepository,
       String[] arguments) {
     this.clock = clock;
     this.postRepository = postRepository;

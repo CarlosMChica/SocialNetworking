@@ -10,14 +10,14 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public class ReadCommand implements Command {
+class ReadCommand implements Command {
 
   private final View view;
   private final PostRepository postRepository;
   private final UserRepository userRepository;
   private final String[] arguments;
 
-  public ReadCommand(View view, PostRepository postRepository, UserRepository userRepository,
+  ReadCommand(View view, PostRepository postRepository, UserRepository userRepository,
       String[] arguments) {
     this.view = view;
     this.postRepository = postRepository;

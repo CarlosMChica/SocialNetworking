@@ -4,12 +4,12 @@ import carlosdelachica.model.User;
 import carlosdelachica.model.UserRepository;
 import java.util.Arrays;
 
-public class FollowCommand implements Command {
+class FollowCommand implements Command {
 
   private final UserRepository userRepository;
   private final String[] arguments;
 
-  public FollowCommand(UserRepository userRepository, String[] arguments) {
+  FollowCommand(UserRepository userRepository, String[] arguments) {
     this.userRepository = userRepository;
     this.arguments = arguments;
   }

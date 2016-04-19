@@ -15,14 +15,14 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.concat;
 import static java.util.stream.Stream.of;
 
-public class WallCommand implements Command {
+class WallCommand implements Command {
 
   private final View view;
   private final PostRepository postRepository;
   private final UserRepository userRepository;
   private final String[] arguments;
 
-  public WallCommand(View view, PostRepository postRepository, UserRepository userRepository,
+  WallCommand(View view, PostRepository postRepository, UserRepository userRepository,
       String[] arguments) {
     this.view = view;
     this.postRepository = postRepository;
