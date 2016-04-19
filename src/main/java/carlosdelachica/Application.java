@@ -43,10 +43,10 @@ public class Application {
     }
 
     public void run() {
-      execute(view.getUserInput());
+      executeUserInput(view.getUserInput());
     }
 
-    public void execute(String userInput) {
+    public void executeUserInput(String userInput) {
       executeCommandFor(parse(userInput));
     }
 

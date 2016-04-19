@@ -58,8 +58,8 @@ import static org.mockito.BDDMockito.given;
   }
 
   @Test public void user_can_publish_messages_to_timeline() {
-    app.execute(BOB_USER_NAME + POST_ACTION + POST_1_MESSAGE);
-    app.execute(BOB_USER_NAME + POST_ACTION + POST_2_MESSAGE);
+    app.executeUserInput(BOB_USER_NAME + POST_ACTION + POST_1_MESSAGE);
+    app.executeUserInput(BOB_USER_NAME + POST_ACTION + POST_2_MESSAGE);
 
     assertThat(repository.postsOf(BOB), is(BOB_POSTS));
   }

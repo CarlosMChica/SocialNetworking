@@ -10,6 +10,7 @@ public class PostFormatter {
 
   private static final String TIMELINE_FORMAT = "%s (%s)";
   private static final String WALL_FORMAT = "%s - %s (%s)";
+
   private final TimeAgoFormatter timeAgoFormatter;
 
   public PostFormatter(TimeAgoFormatter timeAgoFormatter) {

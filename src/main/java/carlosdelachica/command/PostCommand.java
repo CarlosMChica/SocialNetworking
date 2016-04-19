@@ -10,14 +10,14 @@ import java.util.Arrays;
 public class PostCommand implements Command {
 
   private final Clock clock;
-  private final PostRepository repository;
+  private final PostRepository postRepository;
   private final UserRepository userRepository;
   private final String[] arguments;
 
-  public PostCommand(Clock clock, PostRepository repository, UserRepository userRepository,
+  public PostCommand(Clock clock, PostRepository postRepository, UserRepository userRepository,
       String[] arguments) {
     this.clock = clock;
-    this.repository = repository;
+    this.postRepository = postRepository;
     this.userRepository = userRepository;
     this.arguments = arguments;
   }
@@ -29,7 +29,7 @@ public class PostCommand implements Command {
   }
 
   private void storePost(User user, String message) {
-    repository.store(new Post(user, message, clock.currentTimeInMillis()));
+    postRepository.store(new Post(user, message, clock.currentTimeInMillis()));
   }
 
   @Override public String toString() {

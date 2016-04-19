@@ -17,6 +17,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static carlosdelachica.Application.SocialNetworkingApp;
+import static carlosdelachica.infrastructure.Clock.ONE_MIN;
+import static carlosdelachica.infrastructure.Clock.ONE_SEC;
 import static java.util.Arrays.asList;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -24,8 +26,6 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class) public class FollowingFeature {
 
   private static final long NOW = 10000000L;
-  private static final long ONE_SEC = 1000;
-  private static final long ONE_MIN = 60 * ONE_SEC;
 
   private static final long FIFTEEN_SECS_AGO = NOW - 15 * ONE_SEC;
   private static final long ONE_MIN_AGO = NOW - ONE_MIN;
@@ -82,18 +82,18 @@ import static org.mockito.Mockito.*;
   }
 
   private void executePostCommands() {
-    app.execute(ALICE_USER_NAME + POST_ACTION + ALICE_POST_MESSAGE);
-    app.execute(BOB_USER_NAME + POST_ACTION + BOB_POST_1_MESSAGE);
-    app.execute(BOB_USER_NAME + POST_ACTION + BOB_POST_2_MESSAGE);
-    app.execute(CHARLIE_USER_NAME + POST_ACTION + CHARLIE_POST_MESSAGE);
+    app.executeUserInput(ALICE_USER_NAME + POST_ACTION + ALICE_POST_MESSAGE);
+    app.executeUserInput(BOB_USER_NAME + POST_ACTION + BOB_POST_1_MESSAGE);
+    app.executeUserInput(BOB_USER_NAME + POST_ACTION + BOB_POST_2_MESSAGE);
+    app.executeUserInput(CHARLIE_USER_NAME + POST_ACTION + CHARLIE_POST_MESSAGE);
   }
 
   private void executeFollowCommands() {
-    app.execute(CHARLIE_USER_NAME + FOLLOW_ACTION + BOB_USER_NAME);
-    app.execute(CHARLIE_USER_NAME + FOLLOW_ACTION + ALICE_USER_NAME);
+    app.executeUserInput(CHARLIE_USER_NAME + FOLLOW_ACTION + BOB_USER_NAME);
+    app.executeUserInput(CHARLIE_USER_NAME + FOLLOW_ACTION + ALICE_USER_NAME);
   }
 
   private void executeWallCommand() {
-    app.execute(CHARLIE_USER_NAME + WALL_ACTION);
+    app.executeUserInput(CHARLIE_USER_NAME + WALL_ACTION);
   }
 }

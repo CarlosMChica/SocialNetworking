@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static carlosdelachica.infrastructure.Clock.ONE_MIN;
 import static java.util.Arrays.asList;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -26,8 +27,7 @@ import static org.mockito.Mockito.*;
   private static final String POST_ACTION = " -> ";
 
   private static final long NOW = 10000000L;
-  private static final long ONE_SEC_IN_MILLIS = 1000;
-  private static final long ONE_MIN = 60 * ONE_SEC_IN_MILLIS;
+
   private static final long ONE_MIN_AGO = NOW - ONE_MIN;
   private static final long TWO_MINS_AGO = NOW - 2 * ONE_MIN;
 
@@ -67,12 +67,12 @@ import static org.mockito.Mockito.*;
   }
 
   private void executePostCommands() {
-    app.execute(BOB + POST_ACTION + POST_1_MESSAGE);
-    app.execute(BOB + POST_ACTION + POST_2_MESSAGE);
-    app.execute(OTHER_USER_NAME + POST_ACTION + OTHER_USER_POST_MESSAGE);
+    app.executeUserInput(BOB + POST_ACTION + POST_1_MESSAGE);
+    app.executeUserInput(BOB + POST_ACTION + POST_2_MESSAGE);
+    app.executeUserInput(OTHER_USER_NAME + POST_ACTION + OTHER_USER_POST_MESSAGE);
   }
 
   private void executeReadCommand() {
-    app.execute(BOB);
+    app.executeUserInput(BOB);
   }
 }

@@ -2,14 +2,12 @@ package carlosdelachica.delivery_mechanism;
 
 import carlosdelachica.infrastructure.Clock;
 
+import static carlosdelachica.infrastructure.Clock.ONE_DAY;
+import static carlosdelachica.infrastructure.Clock.ONE_HOUR;
+import static carlosdelachica.infrastructure.Clock.ONE_MIN;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class TimeAgoFormatter {
-
-  static final long MILLIS_IN_A_SEC = 1000;
-  static final long MILLIS_IN_A_MIN = 60 * MILLIS_IN_A_SEC;
-  static final long MILLIS_IN_A_HOUR = 60 * MILLIS_IN_A_MIN;
-  static final long MILLIS_IN_A_DAY = 24 * MILLIS_IN_A_HOUR;
 
   private static final String SECOND = "second";
   private static final String MINUTE = "minute";
@@ -24,20 +22,52 @@ public class TimeAgoFormatter {
   }
 
   public String format(long previousTimestamp) {
-    long quantity = calculateTimeAgo(previousTimestamp);
-    if (quantity == 0) {
-      return JUST_NOW;
+    long timeAgo = calculateTimeAgo(previousTimestamp);
+    if (timeAgo == 0) {
+      return formatNow();
     }
-    if (quantity < MILLIS_IN_A_MIN) {
-      return format(MILLISECONDS.toSeconds(quantity), SECOND);
+    if (isLessThanOneMin(timeAgo)) {
+      return formatSeconds(timeAgo);
     }
-    if (quantity < MILLIS_IN_A_HOUR) {
-      return format(MILLISECONDS.toMinutes(quantity), MINUTE);
+    if (isLessThanOneHour(timeAgo)) {
+      return formatMinutes(timeAgo);
     }
-    if (quantity < MILLIS_IN_A_DAY) {
-      return format(MILLISECONDS.toHours(quantity), HOUR);
+    if (isLessThanADay(timeAgo)) {
+      return formatHours(timeAgo);
     }
-    return format(MILLISECONDS.toDays(quantity), DAY);
+    return formatDays(timeAgo);
+  }
+
+  private String formatNow() {
+    return JUST_NOW;
+  }
+
+  private String formatDays(long millis) {
+    return format(MILLISECONDS.toDays(millis), DAY);
+  }
+
+  private String formatHours(long millis) {
+    return format(MILLISECONDS.toHours(millis), HOUR);
+  }
+
+  private String formatMinutes(long millis) {
+    return format(MILLISECONDS.toMinutes(millis), MINUTE);
+  }
+
+  private String formatSeconds(long millis) {
+    return format(MILLISECONDS.toSeconds(millis), SECOND);
+  }
+
+  private boolean isLessThanADay(long millis) {
+    return millis < ONE_DAY;
+  }
+
+  private boolean isLessThanOneHour(long millis) {
+    return millis < ONE_HOUR;
+  }
+
+  private boolean isLessThanOneMin(long millis) {
+    return millis < ONE_MIN;
   }
 
   private long calculateTimeAgo(long before) {

@@ -13,14 +13,14 @@ import static java.util.stream.Collectors.toList;
 public class ReadCommand implements Command {
 
   private final View view;
-  private final PostRepository repository;
+  private final PostRepository postRepository;
   private final UserRepository userRepository;
   private final String[] arguments;
 
-  public ReadCommand(View view, PostRepository repository, UserRepository userRepository,
+  public ReadCommand(View view, PostRepository postRepository, UserRepository userRepository,
       String[] arguments) {
     this.view = view;
-    this.repository = repository;
+    this.postRepository = postRepository;
     this.userRepository = userRepository;
     this.arguments = arguments;
   }
@@ -31,12 +31,11 @@ public class ReadCommand implements Command {
   }
 
   private void printTimeline(User user) {
-    List<Post> timeline = generateTimelineFor(user);
-    view.printTimeline(timeline);
+    view.printTimeline(generateTimelineFor(user));
   }
 
   private List<Post> generateTimelineFor(User user) {
-    return repository.postsOf(user).
+    return postRepository.postsOf(user).
         stream().
         sorted(Post.REVERSE_CHRONOLOGICAL).
         collect(toList());
