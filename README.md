@@ -63,26 +63,33 @@ IMPORTANT: Focus on writing the best code you can produce. Do not rush. Take as 
 - [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 - [Maven](https://maven.apache.org/download.cgi)  
 
-### Steps to run
-
 - Clone
 ```
 $ git clone https://github.com/CarlosMChica/SocialNetworking.git
 ```
 
-- Compile
+### Run application
+
+1. Compile
 ```
 $ cd SocialNetworking
 $ mvn compile
 ```
 
-- Test
-```
-$ mvn test
-```
-
-- Run
+2. Run
 ```
 $ cd target/classes
 $ java carlosdelachica/Application
+```
+
+3. Quit
+```
+ctrl + C
+```
+
+### Steps to run tests
+
+- Test
+```
+$ mvn test
 ```
