@@ -1,4 +1,4 @@
-package carlosdelachica.model;
+package carlosdelachica.model.user;
 
 import java.util.List;
 import org.junit.Test;

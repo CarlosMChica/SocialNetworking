@@ -1,6 +1,6 @@
 package carlosdelachica.delivery_mechanism;
 
-import carlosdelachica.model.Post;
+import carlosdelachica.model.post.Post;
 import java.util.List;
 import java.util.function.Function;
 

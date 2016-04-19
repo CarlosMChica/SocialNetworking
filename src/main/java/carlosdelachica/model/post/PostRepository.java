@@ -1,5 +1,6 @@
-package carlosdelachica.model;
+package carlosdelachica.model.post;
 
+import carlosdelachica.model.user.User;
 import java.util.ArrayList;
 import java.util.List;
 

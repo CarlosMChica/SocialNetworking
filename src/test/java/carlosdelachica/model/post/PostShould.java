@@ -1,5 +1,6 @@
-package carlosdelachica.model;
+package carlosdelachica.model.post;
 
+import carlosdelachica.model.user.User;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

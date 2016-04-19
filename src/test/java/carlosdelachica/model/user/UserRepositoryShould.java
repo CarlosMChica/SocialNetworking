@@ -1,4 +1,4 @@
-package carlosdelachica.model;
+package carlosdelachica.model.user;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,10 +1,10 @@
 package carlosdelachica.command;
 
 import carlosdelachica.infrastructure.Clock;
-import carlosdelachica.model.Post;
-import carlosdelachica.model.PostRepository;
-import carlosdelachica.model.User;
-import carlosdelachica.model.UserRepository;
+import carlosdelachica.model.post.Post;
+import carlosdelachica.model.post.PostRepository;
+import carlosdelachica.model.user.User;
+import carlosdelachica.model.user.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

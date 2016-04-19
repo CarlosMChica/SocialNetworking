@@ -1,16 +1,16 @@
 package carlosdelachica.command;
 
 import carlosdelachica.delivery_mechanism.View;
-import carlosdelachica.model.Post;
-import carlosdelachica.model.PostRepository;
-import carlosdelachica.model.User;
-import carlosdelachica.model.UserRepository;
+import carlosdelachica.model.post.Post;
+import carlosdelachica.model.post.PostRepository;
+import carlosdelachica.model.user.User;
+import carlosdelachica.model.user.UserRepository;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static carlosdelachica.model.Post.REVERSE_CHRONOLOGICAL;
+import static carlosdelachica.model.post.Post.REVERSE_CHRONOLOGICAL;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.concat;
 import static java.util.stream.Stream.of;

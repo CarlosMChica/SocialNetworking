@@ -1,7 +1,7 @@
 package carlosdelachica.command;
 
-import carlosdelachica.model.User;
-import carlosdelachica.model.UserRepository;
+import carlosdelachica.model.user.User;
+import carlosdelachica.model.user.UserRepository;
 import java.util.Arrays;
 
 class FollowCommand implements Command {
