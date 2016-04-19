@@ -40,8 +40,7 @@ class WallCommand implements Command {
   }
 
   private List<Post> generateUserWall(User user) {
-    return userAndFriendsStream(user).map(postRepository::postsOf)
-        .reduce(this::allPosts)
+    return userAndFriendsStream(user).map(postRepository::postsOf).reduce(this::merge)
         .orElseGet(Collections::emptyList)
         .stream()
         .sorted(REVERSE_CHRONOLOGICAL)
@@ -52,9 +51,8 @@ class WallCommand implements Command {
     return concat(of(user), user.friends().stream());
   }
 
-  private List<Post> allPosts(List<Post> posts, List<Post> posts2) {
-    posts.addAll(posts2);
-    return posts;
+  private List<Post> merge(List<Post> posts, List<Post> posts2) {
+    return concat(posts.stream(), posts2.stream()).collect(toList());
   }
 
   @Override public String toString() {
