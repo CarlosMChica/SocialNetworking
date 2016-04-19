@@ -23,9 +23,20 @@ public class PostCommand implements Command {
   }
 
   public void execute() {
-    String userName = arguments[0];
     String message = arguments[1];
-    storePost(userRepository.getByName(userName), message);
+    storePost(getUser(), message);
+  }
+
+  private User getUser() {
+    String userName = arguments[0];
+    createUserIfNotRegistered(userName);
+    return userRepository.getByName(userName);
+  }
+
+  private void createUserIfNotRegistered(String userName) {
+    if (!userRepository.isRegistered(userName)) {
+      userRepository.register(userName);
+    }
   }
 
   private void storePost(User user, String message) {

@@ -19,19 +19,28 @@ import static org.junit.Assert.assertThat;
     repository = new UserRepository();
   }
 
-  @Test public void return_and_store_new_user_if_user_for_given_name_does_not_exist() {
-    User user = repository.getByName(USER_NAME);
+  @Test public void create_new_users() {
+    repository.register(USER_NAME);
 
-    assertThat(user, is(USER));
-    assertThat(repository.count(), is(1));
+    assertThat(repository.getByName(USER_NAME), is(USER));
   }
 
-  @Test public void return_existing_user_if_user_for_given_name_exist() {
+  @Test public void return_false_if_user_is_not_registered() {
+    boolean registered = repository.isRegistered(USER_NAME);
+
+    assertThat(registered, is(false));
+  }
+
+  @Test public void return_true_if_user_is_not_registered() {
+    repository.register(USER_NAME);
+
+    boolean registered = repository.isRegistered(USER_NAME);
+
+    assertThat(registered, is(true));
+  }
+
+  @Test(expected = UserRepository.UserNotRegistered.class)
+  public void throw_exception_if_get_not_registered_user() {
     repository.getByName(USER_NAME);
-
-    User user = repository.getByName(USER_NAME);
-
-    assertThat(user, is(USER));
-    assertThat(repository.count(), is(1));
   }
 }

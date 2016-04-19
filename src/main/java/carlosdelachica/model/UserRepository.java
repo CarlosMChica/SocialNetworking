@@ -9,11 +9,17 @@ public class UserRepository {
   private final List<User> users = new ArrayList<>();
 
   public User getByName(String userName) {
-    return getUser(userName).orElseGet(() -> store(userName));
+    return getUser(userName).orElseGet(() -> {
+      throw new UserNotRegistered();
+    });
   }
 
-  int count() {
-    return users.size();
+  public void register(String userName) {
+    users.add(new User(userName));
+  }
+
+  public boolean isRegistered(String userName) {
+    return getUser(userName).isPresent();
   }
 
   private Optional<User> getUser(String userName) {
@@ -22,9 +28,6 @@ public class UserRepository {
         findFirst();
   }
 
-  private User store(String userName) {
-    User user = new User(userName);
-    users.add(user);
-    return user;
+  class UserNotRegistered extends RuntimeException {
   }
 }
