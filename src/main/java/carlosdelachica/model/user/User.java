@@ -1,18 +1,20 @@
 package carlosdelachica.model.user;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.Collections.unmodifiableList;
 
 public class User {
 
   private final String name;
-  private List<User> friends;
+  private final Set<User> friends;
 
   public User(String name) {
     this.name = name;
-    this.friends = new ArrayList<>();
+    this.friends = new HashSet<>();
   }
 
   public boolean hasName(String name) {
@@ -28,7 +30,7 @@ public class User {
   }
 
   public List<User> friends() {
-    return unmodifiableList(friends);
+    return unmodifiableList(new ArrayList<>(friends));
   }
 
   @Override public String toString() {
