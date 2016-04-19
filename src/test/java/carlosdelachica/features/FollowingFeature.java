@@ -1,6 +1,5 @@
 package carlosdelachica.features;
 
-import carlosdelachica.command.Command;
 import carlosdelachica.command.CommandsFactory;
 import carlosdelachica.delivery_mechanism.ConsoleWrapper;
 import carlosdelachica.delivery_mechanism.InputParser;
@@ -8,17 +7,16 @@ import carlosdelachica.delivery_mechanism.PostFormatter;
 import carlosdelachica.delivery_mechanism.TimeAgoFormatter;
 import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
-import carlosdelachica.model.Input;
 import carlosdelachica.model.PostRepository;
 import carlosdelachica.model.UserRepository;
 import java.util.List;
-import java.util.stream.Stream;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static carlosdelachica.Application.SocialNetworkingApp;
 import static java.util.Arrays.asList;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -61,63 +59,41 @@ import static org.mockito.Mockito.*;
   @Mock Clock commandsClock;
   @Mock ConsoleWrapper console;
 
-  private CommandsFactory commandsFactory;
-  private InputParser inputParser;
+  private SocialNetworkingApp app;
 
   @Before public void setUp() {
-    inputParser = new InputParser();
-    View view = new View(console, new PostFormatter(new TimeAgoFormatter(timeAgoFormatterClock)));
-    commandsFactory =
-        new CommandsFactory(commandsClock, view, new PostRepository(), new UserRepository());
-
     given(timeAgoFormatterClock.currentTimeInMillis()).willReturn(NOW);
     given(commandsClock.currentTimeInMillis()).willReturn(FIVE_MINS_AGO, TWO_MINS_AGO, ONE_MIN_AGO,
         FIFTEEN_SECS_AGO);
+
+    View view = new View(console, new PostFormatter(new TimeAgoFormatter(timeAgoFormatterClock)));
+    CommandsFactory commandsFactory =
+        new CommandsFactory(commandsClock, view, new PostRepository(), new UserRepository());
+    app = new SocialNetworkingApp(new InputParser(), commandsFactory, view);
   }
 
   @Test public void user_can_subscribe_to_other_user_timeline() {
-    executePostCommands(givenPostInputs());
+    executePostCommands();
 
-    executeFollowCommands(givenFollowInputs());
-    executeWallCommand(givenWallInput());
+    executeFollowCommands();
+    executeWallCommand();
 
     verify(console).printLines(USER_WALL_LINES);
   }
 
-  private void executePostCommands(Input[] postInputs) {
-    executeInputs(postInputs);
+  private void executePostCommands() {
+    app.execute(ALICE_USER_NAME + POST_ACTION + ALICE_POST_MESSAGE);
+    app.execute(BOB_USER_NAME + POST_ACTION + BOB_POST_1_MESSAGE);
+    app.execute(BOB_USER_NAME + POST_ACTION + BOB_POST_2_MESSAGE);
+    app.execute(CHARLIE_USER_NAME + POST_ACTION + CHARLIE_POST_MESSAGE);
   }
 
-  private void executeFollowCommands(Input[] followInputs) {
-    executeInputs(followInputs);
+  private void executeFollowCommands() {
+    app.execute(CHARLIE_USER_NAME + FOLLOW_ACTION + BOB_USER_NAME);
+    app.execute(CHARLIE_USER_NAME + FOLLOW_ACTION + ALICE_USER_NAME);
   }
 
-  private void executeWallCommand(Input wallInput) {
-    executeInputs(wallInput);
-  }
-
-  private void executeInputs(Input... inputs) {
-    Stream.of(inputs).forEach(input -> {
-      Command command = commandsFactory.make(input);
-      command.execute();
-    });
-  }
-
-  private Input[] givenPostInputs() {
-    Input postInput1 = inputParser.parse(ALICE_USER_NAME + POST_ACTION + ALICE_POST_MESSAGE);
-    Input postInput2 = inputParser.parse(BOB_USER_NAME + POST_ACTION + BOB_POST_1_MESSAGE);
-    Input postInput3 = inputParser.parse(BOB_USER_NAME + POST_ACTION + BOB_POST_2_MESSAGE);
-    Input postInput4 = inputParser.parse(CHARLIE_USER_NAME + POST_ACTION + CHARLIE_POST_MESSAGE);
-    return new Input[] {postInput1, postInput2, postInput3, postInput4};
-  }
-
-  private Input givenWallInput() {
-    return inputParser.parse(CHARLIE_USER_NAME + WALL_ACTION);
-  }
-
-  private Input[] givenFollowInputs() {
-    Input followInput1 = inputParser.parse(CHARLIE_USER_NAME + FOLLOW_ACTION + BOB_USER_NAME);
-    Input followInput2 = inputParser.parse(CHARLIE_USER_NAME + FOLLOW_ACTION + ALICE_USER_NAME);
-    return new Input[] {followInput1, followInput2};
+  private void executeWallCommand() {
+    app.execute(CHARLIE_USER_NAME + WALL_ACTION);
   }
 }

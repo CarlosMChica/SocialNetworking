@@ -1,6 +1,6 @@
 package carlosdelachica.features;
 
-import carlosdelachica.command.Command;
+import carlosdelachica.Application.SocialNetworkingApp;
 import carlosdelachica.command.CommandsFactory;
 import carlosdelachica.delivery_mechanism.ConsoleWrapper;
 import carlosdelachica.delivery_mechanism.InputParser;
@@ -8,11 +8,9 @@ import carlosdelachica.delivery_mechanism.PostFormatter;
 import carlosdelachica.delivery_mechanism.TimeAgoFormatter;
 import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
-import carlosdelachica.model.Input;
 import carlosdelachica.model.PostRepository;
 import carlosdelachica.model.UserRepository;
 import java.util.List;
-import java.util.stream.Stream;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,8 +31,8 @@ import static org.mockito.Mockito.*;
   private static final long ONE_MIN_AGO = NOW - ONE_MIN;
   private static final long TWO_MINS_AGO = NOW - 2 * ONE_MIN;
 
-  private static final String OTHER_USER_NAME = "other_user";
-  private static final String USER_NAME = "userName";
+  private static final String OTHER_USER_NAME = "Alice";
+  private static final String BOB = "Bob";
 
   private static final String POST_1_MESSAGE = "Damn! We lost!";
   private static final String POST_2_MESSAGE = "Good game though.";
@@ -48,50 +46,33 @@ import static org.mockito.Mockito.*;
   @Mock Clock commandsClock;
   @Mock ConsoleWrapper console;
 
-  private CommandsFactory commandsFactory;
-  private InputParser inputParser;
+  private SocialNetworkingApp app;
 
   @Before public void setUp() {
-    inputParser = new InputParser();
-    View view = new View(console, new PostFormatter(new TimeAgoFormatter(timeAgoFormatterClock)));
-    commandsFactory =
-        new CommandsFactory(commandsClock, view, new PostRepository(), new UserRepository());
-
     given(timeAgoFormatterClock.currentTimeInMillis()).willReturn(NOW);
     given(commandsClock.currentTimeInMillis()).willReturn(TWO_MINS_AGO, ONE_MIN_AGO);
+
+    View view = new View(console, new PostFormatter(new TimeAgoFormatter(timeAgoFormatterClock)));
+    CommandsFactory commandsFactory =
+        new CommandsFactory(commandsClock, view, new PostRepository(), new UserRepository());
+    app = new SocialNetworkingApp(new InputParser(), commandsFactory, view);
   }
 
   @Test public void can_read_user_timeline() {
-    executePostCommands(givenPostInputs());
+    executePostCommands();
 
-    executeReadCommand(givenReadInput());
+    executeReadCommand();
 
     verify(console).printLines(POSTS_LINES);
   }
 
-  private void executePostCommands(Input[] postInputs) {
-    executeInputs(postInputs);
+  private void executePostCommands() {
+    app.execute(BOB + POST_ACTION + POST_1_MESSAGE);
+    app.execute(BOB + POST_ACTION + POST_2_MESSAGE);
+    app.execute(OTHER_USER_NAME + POST_ACTION + OTHER_USER_POST_MESSAGE);
   }
 
-  private void executeReadCommand(Input readInput) {
-    executeInputs(readInput);
-  }
-
-  private void executeInputs(Input... inputs) {
-    Stream.of(inputs).forEach(input -> {
-      Command command = commandsFactory.make(input);
-      command.execute();
-    });
-  }
-
-  private Input givenReadInput() {
-    return inputParser.parse(USER_NAME);
-  }
-
-  private Input[] givenPostInputs() {
-    Input postInput1 = inputParser.parse(USER_NAME + POST_ACTION + POST_1_MESSAGE);
-    Input postInput2 = inputParser.parse(USER_NAME + POST_ACTION + POST_2_MESSAGE);
-    Input postInput3 = inputParser.parse(OTHER_USER_NAME + POST_ACTION + OTHER_USER_POST_MESSAGE);
-    return new Input[] {postInput1, postInput2, postInput3};
+  private void executeReadCommand() {
+    app.execute(BOB);
   }
 }
