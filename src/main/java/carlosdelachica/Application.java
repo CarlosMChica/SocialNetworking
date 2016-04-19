@@ -15,13 +15,19 @@ import carlosdelachica.model.UserRepository;
 public class Application {
 
   public static void main(String[] args) {
-    InputParser parser = new InputParser();
     Clock clock = new Clock();
     View view = new View(new ConsoleWrapper(), new PostFormatter(new TimeAgoFormatter(clock)));
     CommandsFactory commandsFactory =
         new CommandsFactory(clock, view, new PostRepository(), new UserRepository());
 
-    new SocialNetworkingApp(parser, commandsFactory, view).run();
+    SocialNetworkingApp app = new SocialNetworkingApp(new InputParser(), commandsFactory, view);
+    execute(app);
+  }
+
+  private static void execute(SocialNetworkingApp app) {
+    while (true) {
+      app.run();
+    }
   }
 
   public static class SocialNetworkingApp {
@@ -37,17 +43,15 @@ public class Application {
     }
 
     public void run() {
-      while (true) {
-        execute();
-      }
+      execute(view.getUserInput());
     }
 
-    void execute() {
-      executeCommandFor(getNextInput());
+    public void execute(String userInput) {
+      executeCommandFor(parse(userInput));
     }
 
-    private Input getNextInput() {
-      return parser.parse(view.getUserInput());
+    private Input parse(String userInput) {
+      return parser.parse(userInput);
     }
 
     private void executeCommandFor(Input input) {

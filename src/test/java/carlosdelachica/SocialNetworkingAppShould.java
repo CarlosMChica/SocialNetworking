@@ -2,9 +2,9 @@ package carlosdelachica;
 
 import carlosdelachica.command.Command;
 import carlosdelachica.command.CommandsFactory;
-import carlosdelachica.model.Input;
 import carlosdelachica.delivery_mechanism.InputParser;
 import carlosdelachica.delivery_mechanism.View;
+import carlosdelachica.model.Input;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +38,7 @@ import static org.mockito.Mockito.*;
     Input input = givenInputFor(userInput);
     Command command = givenCommandFor(input);
 
-    app.execute();
+    app.run();
 
     verify(command).execute();
   }
