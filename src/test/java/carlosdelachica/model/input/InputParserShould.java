@@ -1,13 +1,12 @@
-package carlosdelachica.delivery_mechanism;
+package carlosdelachica.model.input;
 
-import carlosdelachica.model.Input;
 import org.junit.Before;
 import org.junit.Test;
 
-import static carlosdelachica.model.Input.Type.FOLLOW;
-import static carlosdelachica.model.Input.Type.POST;
-import static carlosdelachica.model.Input.Type.READ;
-import static carlosdelachica.model.Input.Type.WALL;
+import static carlosdelachica.model.input.Input.Type.FOLLOW;
+import static carlosdelachica.model.input.Input.Type.POST;
+import static carlosdelachica.model.input.Input.Type.READ;
+import static carlosdelachica.model.input.Input.Type.WALL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 

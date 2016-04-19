@@ -1,4 +1,4 @@
-package carlosdelachica.model;
+package carlosdelachica.model.input;
 
 import java.util.Arrays;
 

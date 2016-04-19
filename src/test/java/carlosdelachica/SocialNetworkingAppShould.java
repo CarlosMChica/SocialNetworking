@@ -2,9 +2,9 @@ package carlosdelachica;
 
 import carlosdelachica.command.Command;
 import carlosdelachica.command.CommandsFactory;
-import carlosdelachica.delivery_mechanism.InputParser;
 import carlosdelachica.delivery_mechanism.View;
-import carlosdelachica.model.Input;
+import carlosdelachica.model.input.Input;
+import carlosdelachica.model.input.InputParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

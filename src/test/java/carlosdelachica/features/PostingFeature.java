@@ -2,10 +2,10 @@ package carlosdelachica.features;
 
 import carlosdelachica.command.CommandsFactory;
 import carlosdelachica.delivery_mechanism.ConsoleWrapper;
-import carlosdelachica.delivery_mechanism.InputParser;
 import carlosdelachica.delivery_mechanism.PostFormatter;
 import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
+import carlosdelachica.model.input.InputParser;
 import carlosdelachica.model.post.Post;
 import carlosdelachica.model.post.PostRepository;
 import carlosdelachica.model.user.User;

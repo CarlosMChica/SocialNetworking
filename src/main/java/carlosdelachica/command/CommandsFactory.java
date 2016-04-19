@@ -2,7 +2,7 @@ package carlosdelachica.command;
 
 import carlosdelachica.delivery_mechanism.View;
 import carlosdelachica.infrastructure.Clock;
-import carlosdelachica.model.Input;
+import carlosdelachica.model.input.Input;
 import carlosdelachica.model.post.PostRepository;
 import carlosdelachica.model.user.UserRepository;
 

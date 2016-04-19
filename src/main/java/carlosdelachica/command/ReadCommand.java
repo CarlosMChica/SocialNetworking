@@ -8,6 +8,7 @@ import carlosdelachica.model.user.UserRepository;
 import java.util.Arrays;
 import java.util.List;
 
+import static carlosdelachica.model.post.Post.REVERSE_CHRONOLOGICAL;
 import static java.util.stream.Collectors.toList;
 
 class ReadCommand implements Command {
@@ -37,7 +38,7 @@ class ReadCommand implements Command {
   private List<Post> generateTimelineFor(User user) {
     return postRepository.postsOf(user).
         stream().
-        sorted(Post.REVERSE_CHRONOLOGICAL).
+        sorted(REVERSE_CHRONOLOGICAL).
         collect(toList());
   }
 
